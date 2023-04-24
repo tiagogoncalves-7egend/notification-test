@@ -13,9 +13,8 @@ COPY tests tests
 COPY package*.json .
 COPY yarn.lock .
 COPY tsconfig.json .
-COPY .npmrc .
 
-RUN --mount=type=secret,id=npm,required=true,uid=1000,gid=1000,target=/home/node/.npmrc \
+RUN --mount=type=secret,id=npm,required=true,uid=1000,gid=1000
     --mount=type=cache,id=yarn,sharing=locked,target=/usr/local/share/.cache/yarn \
     yarn install
 
