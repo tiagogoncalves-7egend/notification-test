@@ -2,35 +2,6 @@ name: Build notification-hub-models package
 
 on:
   workflow_dispatch:
-    inputs:
-      SLACK_CHANNEL:
-        description: The Slack channel name to post the notification
-        type: string
-        required: true
-      AUTHOR_NAME:
-        description: The author's fullname
-        type: string
-        required: true
-      PROJECT_NAME:
-        description: The project name
-        type: string
-        required: true
-      RELEASE_TAG:
-        description: The release tag
-        type: string
-        required: true
-      RELEASE_CHANGELOG:
-        description: The changelog of the release
-        type: string
-        required: true
-      LINKS_SOURCE_CODE:
-        description: The url of the repository that published the new package
-        type: string
-        required: true
-      LINKS_REGISTRY:
-        description: The registry url that contains all packages
-        type: string
-        required: true
 
 env:
   PACKAGE_REGISTRY: https://npm.pkg.github.com
