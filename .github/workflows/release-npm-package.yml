@@ -1,5 +1,5 @@
 on:
-  workflow_call:inputs:
+  workflow_call:
     inputs:
       SLACK_CHANNEL:
         description: The Slack channel name to post the notification
