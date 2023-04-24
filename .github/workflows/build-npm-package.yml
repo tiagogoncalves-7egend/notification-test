@@ -1,4 +1,4 @@
-name: Build NPM Packages
+name: Build notification-hub-models package
 
 on:
   workflow_dispatch:
@@ -33,7 +33,7 @@ jobs:
         run: yarn run build
 
       - name: Set package version
-        run: npm version ${{ inputs.tags }} --no-git-tag-version
+        run: npm version ${{ inputs.tag }} --no-git-tag-version
 
       - name: Publish to NPM registry
         run: yarn publish
