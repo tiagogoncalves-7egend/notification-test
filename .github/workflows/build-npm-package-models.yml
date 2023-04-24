@@ -14,7 +14,7 @@ jobs:
         run: echo "Testing"
 
   build-notification-hub-models-package:
-    uses: ./.github/workflows/release-npm-package.yml@main
+    uses: ./.github/workflows/release-npm-package.yml
     secrets: inherit
     # with:
     #   SLACK_CHANNEL: hub
