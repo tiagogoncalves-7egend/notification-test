@@ -1,8 +1,12 @@
 name: Build NPM Packages
 
 on:
-  release:
-    types: [created]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: The released tag
+        required: true
+        type: string
 
 env:
   PACKAGE_REGISTRY: https://npm.pkg.github.com
@@ -29,7 +33,7 @@ jobs:
         run: yarn run build
 
       - name: Set package version
-        run: npm version ${{ github.ref_name }} --no-git-tag-version
+        run: npm version ${{ inputs.tags }} --no-git-tag-version
 
       - name: Publish to NPM registry
         run: yarn publish
