@@ -16,7 +16,7 @@ on:
         required: true
         default: No release changelog provided
 
-jobs:
+jobs:  
   release-notification-hub-models-package:
     uses: 7egend/workflows/.github/workflows/release-npm-package.yml@main
     secrets: inherit
@@ -26,7 +26,7 @@ jobs:
     with:
       package-path: ./packages/nodejs/models
       slack-channel: ${{ inputs.slack-channel }}
-      author-name: Tiago Barros
+      author-name: ${{ github.triggering_actor }}
       project-name: ${{ github.event.repository.name }}
       release-tag: ${{ inputs.release-tag }}
       release-changelog: ${{ inputs.release-changelog }}
