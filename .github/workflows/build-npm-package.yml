@@ -55,7 +55,7 @@ jobs:
         run: yarn run build
 
       - name: Set package version
-        run: npm version ${{ inputs.tag }} --no-git-tag-version
+        run: npm version ${{ inputs.RELEASE_TAG }} --no-git-tag-version
 
       - name: Publish to NPM registry
         run: yarn publish
@@ -67,11 +67,11 @@ jobs:
     secrets: inherit
     needs: build-and-publish-npm-package
     with:
-      SLACK_CHANNEL: ${{ inputs.SLACK_CHANNEL }}
-      AUTHOR_NAME: ${{ inputs.AUTHOR_NAME }}
-      PROJECT_NAME: ${{ inputs.PROJECT_NAME }}
-      RELEASE_TAG: ${{ inputs.RELEASE_TAG }}
-      RELEASE_CHANGELOG: ${{ inputs.RELEASE_CHANGELOG }}
+      SLACK_CHANNEL: ${{ SLACK_CHANNEL }}
+      AUTHOR_NAME: ${{ AUTHOR_NAME }}
+      PROJECT_NAME: ${{ PROJECT_NAME }}
+      RELEASE_TAG: ${{ RELEASE_TAG }}
+      RELEASE_CHANGELOG: ${{ RELEASE_CHANGELOG }}
       LINKS_SOURCE_CODE: $${{ LINKS_SOURCE_CODE }}
       LINKS_REGISTRY: $${{ LINKS_REGISTRY }}
 
