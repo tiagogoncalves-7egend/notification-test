@@ -1,4 +1,4 @@
-name: Build notification-hub-models package
+name: Release notification-hub-models package
 
 on:
   workflow_dispatch:
@@ -14,7 +14,6 @@ on:
       release-changelog:
         description: Version changelog
         required: true
-        default: No release changelog provided
 
 jobs:  
   release-notification-hub-models-package:
