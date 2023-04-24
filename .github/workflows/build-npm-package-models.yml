@@ -10,20 +10,17 @@ on:
 
 jobs:
   build-notification-hub-models-package:
-    defaults:
-      run:
-        working-directory: ./packages/nodejs/models
+    uses: 7egend/workflows/.github/workflows/release-npm-package.yml@main
     secrets: inherit
     permissions:
         packages: write
         contents: read
-    steps:
-      - uses: 7egend/workflows/.github/workflows/release-npm-package.yml@main
-        with:
-          SLACK_CHANNEL: hub
-          AUTHOR_NAME: Tiago Barros
-          PROJECT_NAME: Workflows
-          RELEASE_TAG: ${{ inputs.RELEASE_TAG }}
-          RELEASE_CHANGELOG: Hardcoded value
-          LINKS_SOURCE_CODE: https://gitlab.com/7egend/projects/home/other/tests/apagame
-          LINKS_REGISTRY: https://gitlab.com/7egend/projects/home/other/tests/apagame/registry
+    working-directory: ./packages/nodejs/models
+    with:
+      SLACK_CHANNEL: hub
+      AUTHOR_NAME: Tiago Barros
+      PROJECT_NAME: Workflows
+      RELEASE_TAG: ${{ inputs.RELEASE_TAG }}
+      RELEASE_CHANGELOG: Hardcoded value
+      LINKS_SOURCE_CODE: https://gitlab.com/7egend/projects/home/other/tests/apagame
+      LINKS_REGISTRY: https://gitlab.com/7egend/projects/home/other/tests/apagame/registry
