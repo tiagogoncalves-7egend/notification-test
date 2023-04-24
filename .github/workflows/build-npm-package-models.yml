@@ -13,7 +13,7 @@ env:
 
 jobs:
   build-notification-hub-models-package:
-    uses: ./.github/workflows/release-npm-package.yml
+    uses: 7egend/workflows/.github/workflows/release-npm-package.yml@main
     secrets: inherit
     permissions:
         packages: write
