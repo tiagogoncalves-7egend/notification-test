@@ -6,7 +6,7 @@ on:
       RELEASE_TAG:
         description: 'The release tag'
         required: true
-        default: 'v0.0.0'
+        default: 'v1.0.0'
 
 env:
   PACKAGE_REGISTRY: https://npm.pkg.github.com
@@ -18,6 +18,9 @@ jobs:
     permissions:
         packages: write
         contents: read
+    defaults:
+      run:
+        working-directory: ./packages/nodejs/models
     with:
       SLACK_CHANNEL: hub
       AUTHOR_NAME: Tiago Barros
