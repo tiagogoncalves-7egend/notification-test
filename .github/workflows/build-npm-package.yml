@@ -49,6 +49,9 @@ jobs:
       AUTHOR_NAME: Tiago Barros
       PROJECT_NAME: Workflows
       RELEASE_TAG: ${{ inputs.tag }}
+      RELEASE_CHANGELOG: Hardcoded value
+      LINKS_SOURCE_CODE: https://gitlab.com/7egend/projects/home/other/tests/apagame
+      LINKS_REGISTRY: https://gitlab.com/7egend/projects/home/other/tests/apagame/registry
 
   npm-package-version-failed:
     runs-on: ubuntu-latest
@@ -57,7 +60,3 @@ jobs:
     steps:
       - name: Post failed package build
         run: echo "Failed"
-      RELEASE_CHANGELOG: Hardcoded value
-      LINKS_SOURCE_CODE: https://gitlab.com/7egend/projects/home/other/tests/apagame
-      LINKS_REGISTRY: https://gitlab.com/7egend/projects/home/other/tests/apagame/registry
-

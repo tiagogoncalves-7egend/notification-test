@@ -1,0 +1,62 @@
+on:
+  workflow_call:
+    inputs:
+      SLACK_CHANNEL:
+        description: The Slack channel name to post the notification
+        type: string
+        required: true
+      AUTHOR_NAME:
+        description: The author's fullname that published the new package
+        type: string
+        required: true
+      PROJECT_NAME:
+        description: The project name
+        type: string
+        required: true
+      RELEASE_TAG:
+        description: The new version tag
+        type: string
+        required: true
+      RELEASE_CHANGELOG:
+        description: The changelog of the new version
+        type: string
+        required: true
+      LINKS_SOURCE_CODE:
+        description: The url of the repository that published the new package
+        type: string
+        required: true
+      LINKS_REGISTRY:
+        description: The registry url that contains all packages
+        type: string
+        required: true
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Posting new npm package notification
+      run: |
+        curl -X POST "https://hub.7egend.cr/v1/notifications" \
+          -H "Authorization: Bearer ${{ secrets.NOTIFICATION_HUB_ACCESS_TOKEN }}" \
+          -H "Content-Type: application/json" \
+          -d '{
+                "platforms": [
+                  {
+                    "type": "slack-channel-members",
+                    "channel": "${{ inputs.SLACK_CHANNEL }}"
+                  }
+                ],
+                "notification": {
+                  "type": "NewNpmPackageVersion",
+                  "author": "${{ inputs.AUTHOR_NAME }}",
+                  "group": "${{ inputs.PROJECT_NAME }}",
+                  "release": {
+                    "tag": "${{ inputs.RELEASE_TAG }}",
+                    "changelog": "${{ inputs.RELEASE_CHANGELOG }}"
+                  },
+                  "links": {
+                    "sourceCode": "${{ inputs.LINKS_SOURCE_CODE }}",
+                    "registry": "${{ inputs.LINKS_REGISTRY }}"
+                  }
+                }
+              }'

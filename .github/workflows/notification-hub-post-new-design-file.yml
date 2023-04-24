@@ -1,0 +1,94 @@
+on:
+  workflow_call:
+    inputs:
+      SLACK_CHANNEL:
+        description: The Slack channel name to post the notification
+        type: string
+        required: true
+      AUTHOR_NAME:
+        description: The author's fullname
+        type: string
+        required: true
+      CREATED_AT:
+        description: 'The date the designer released a new file (format: YYYY-MM-DDTHH:mm:ss.xxxZ)'
+        type: string
+        required: true
+      PROJECT_NAME:
+        description: The project name
+        type: string
+        required: true
+      WORKGROUP:
+        description: The subproject path that has a new design file
+        type: string
+        required: true
+      RELEASE_TAG:
+        description: The release tag
+        type: string
+        required: true
+      RELEASE_CHANGELOG:
+        description: The changelog of the release
+        type: string
+        required: true
+      DIFFERENCES_ADDED:
+        description: How many files were added comparing with the previous version
+        type: string
+        required: true
+      DIFFERENCES_REMOVED:
+        description: How many files were removed comparing with the previous version
+        type: string
+        required: true
+      DIFFERENCES_CHANGED:
+        description: How many files were changed comparing with the previous version
+        type: string
+        required: true
+      LINKS_FIGMA:
+        description: The url of the Figma file
+        type: string
+        required: true
+      LINKS_AZURE_WORK_ITEM:
+        description: The url of the work item that shows the release history
+        type: string
+        required: true
+      LINKS_REPORT:
+        description: The url of that shows the differences to the previous release
+        type: string
+        required: true
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Posting new design file notification
+      run: |
+        curl -X POST "https://hub.7egend.cr/v1/notifications" \
+          -H "Authorization: Bearer ${{ secrets.NOTIFICATION_HUB_ACCESS_TOKEN }}" \
+          -H "Content-Type: application/json" \
+          -d '{
+                "platforms": [
+                  {
+                    "type": "slack-channel-members",
+                    "channel": "${{ inputs.SLACK_CHANNEL }}"
+                  }
+                ],
+                "notification": {
+                  "type": "NewDesignFile",
+                  "author": "${{ inputs.AUTHOR_NAME }}",
+                  "createdAt": "${{ inputs.CREATED_AT }}",
+                  "group": "${{ inputs.PROJECT_NAME }}",
+                  "subgroup": "${{ inputs.WORKGROUP }}",
+                  "release": {
+                    "tag": "${{ inputs.RELEASE_TAG }}",
+                    "changelog": "${{ inputs.RELEASE_CHANGELOG }}"
+                  },
+                  "differences": {
+                    "added": ${{ inputs.DIFFERENCES_ADDED }},
+                    "removed": ${{ inputs.DIFFERENCES_REMOVED }},
+                    "changed": ${{ inputs.DIFFERENCES_CHANGED }}
+                  },
+                  "links": {
+                    "figma": "${{ inputs.LINKS_FIGMA }}",
+                    "azureWorkItem": "${{ inputs.LINKS_AZURE_WORK_ITEM }}",
+                    "report": "${{ inputs.LINKS_REPORT }}"
+                  }
+                }
+              }'
