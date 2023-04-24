@@ -12,7 +12,7 @@ env:
   PACKAGE_REGISTRY: https://npm.pkg.github.com
 
 jobs:
-  build-and-publish-models-package:
+  build-and-publish-package:
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -43,12 +43,20 @@ jobs:
   new-npm-package-version:
     uses: 7egend/workflows/.github/workflows/notification-hub-post-new-npm-package-version.yml@main
     secrets: inherit
-    needs: build-and-publish-models-package
+    needs: build-and-publish-package
     with:
       SLACK_CHANNEL: hub
       AUTHOR_NAME: Tiago Barros
       PROJECT_NAME: Workflows
       RELEASE_TAG: ${{ inputs.tag }}
+
+  npm-package-version-failed:
+    runs-on: ubuntu-latest
+    needs: build-and-publish-package
+    if: ${{ failure() }}
+    steps:
+      - name: Post failed package build
+        run: echo "Failed"
       RELEASE_CHANGELOG: Hardcoded value
       LINKS_SOURCE_CODE: https://gitlab.com/7egend/projects/home/other/tests/apagame
       LINKS_REGISTRY: https://gitlab.com/7egend/projects/home/other/tests/apagame/registry
