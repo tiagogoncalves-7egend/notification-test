@@ -17,7 +17,7 @@ on:
         default: No release changelog provided
 
 jobs:
-  build-notification-hub-models-package:
+  release-notification-hub-models-package:
     uses: 7egend/workflows/.github/workflows/release-npm-package.yml@main
     secrets: inherit
     permissions:
@@ -25,7 +25,7 @@ jobs:
         contents: read
     with:
       package-path: ./packages/nodejs/models
-      slack-channel: ${{ slack-channel }}
+      slack-channel: ${{ inputs.slack-channel }}
       author-name: Tiago Barros
       project-name: Workflows
       release-tag: ${{ inputs.release-tag }}
