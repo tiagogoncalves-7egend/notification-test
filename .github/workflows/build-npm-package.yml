@@ -55,8 +55,8 @@ jobs:
 
   npm-package-version-failed:
     runs-on: ubuntu-latest
-    if: ${{ failure() }}
     needs: build-and-publish-package
+    if: ${{ always() && needs.build-and-publish-package.result == 'failure' }}
     steps:
       - name: Post failed package build
         run: echo "Failed"
