@@ -1,0 +1,50 @@
+name: Build NPM Packages
+
+on:
+  release:
+    types: [created]
+
+env:
+  PACKAGE_REGISTRY: https://npm.pkg.github.com
+
+jobs:
+  models:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./packages/nodejs/models
+    permissions:
+        packages: write
+        contents: read
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          registry-url: ${{ env.PACKAGE_REGISTRY }}
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Build package
+        run: yarn run build
+
+      - name: Set package version
+        run: npm version ${{ github.ref_name }} --no-git-tag-version
+
+      - name: Publish to NPM registry
+        run: yarn publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  new-npm-package-version:
+    uses: 7egend/workflows/.github/workflows/notification-hub-post-new-npm-package-version.yml@main
+    secrets: inherit
+    with:
+      SLACK_CHANNEL: hub
+      AUTHOR_NAME: ${{ github.event.pusher.name }}
+      PROJECT_NAME: Workflows
+      RELEASE_TAG: latest
+      RELEASE_CHANGELOG: Hardcoded value
+      LINKS_SOURCE_CODE: https://gitlab.com/7egend/projects/home/other/tests/apagame
+      LINKS_REGISTRY: https://gitlab.com/7egend/projects/home/other/tests/apagame/registry
+
