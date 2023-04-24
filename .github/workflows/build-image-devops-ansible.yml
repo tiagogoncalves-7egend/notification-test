@@ -19,4 +19,5 @@ jobs:
     permissions: write-all
     secrets: inherit
     with:
-      CONTEXT_PATH: devops/ansible
+      DOCKERFILE_PATH: devops/ansible/Dockerfile
+      CONTEXT_PATH: devops/ansible/
