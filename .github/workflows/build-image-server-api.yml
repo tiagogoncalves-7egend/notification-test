@@ -2,13 +2,6 @@ name: Build server/api docker image
 
 on:
   workflow_dispatch:
-  push:
-   branches:    
-     - main
-   tags:
-     - '*.*.*'
-   paths:
-     - 'server/api/**'
 
 jobs:
   build-image:

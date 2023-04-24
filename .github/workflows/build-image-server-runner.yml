@@ -2,13 +2,6 @@ name: Build server/runner docker image
 
 on:
   workflow_dispatch:
-  push:
-   branches:    
-     - main
-   tags:
-     - '*.*.*'
-   paths:
-     - 'server/runner/**'
 
 jobs:
   build-image:
