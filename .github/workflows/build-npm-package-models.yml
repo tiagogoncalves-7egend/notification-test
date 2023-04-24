@@ -27,7 +27,7 @@ jobs:
       package-path: ./packages/nodejs/models
       slack-channel: ${{ inputs.slack-channel }}
       author-name: Tiago Barros
-      project-name: Workflows
+      project-name: ${{ github.event.repository.name }}
       release-tag: ${{ inputs.release-tag }}
       release-changelog: ${{ inputs.release-changelog }}
       links-source-code: https://gitlab.com/7egend/projects/home/other/tests/apagame
