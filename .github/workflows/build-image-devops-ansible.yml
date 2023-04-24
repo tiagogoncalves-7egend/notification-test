@@ -20,4 +20,4 @@ jobs:
     secrets: inherit
     with:
       DOCKERFILE_PATH: devops/ansible/Dockerfile
-      CONTEXT_PATH: devops/ansible/
+      CONTEXT_PATH: devops/ansible
