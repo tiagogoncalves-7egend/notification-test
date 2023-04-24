@@ -15,8 +15,8 @@ jobs:
     permissions:
         packages: write
         contents: read
-    working-directory: ./packages/nodejs/models
     with:
+      project-path: ./packages/nodejs/models
       SLACK_CHANNEL: hub
       AUTHOR_NAME: Tiago Barros
       PROJECT_NAME: Workflows
