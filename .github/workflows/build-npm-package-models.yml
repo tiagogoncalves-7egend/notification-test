@@ -4,17 +4,17 @@ on:
   workflow_dispatch:
     inputs:
       slack-channel:
-        description: The Slack channel name to post the notification
+        description: Slack channel to post a notification
         required: true
         default: hub
       release-tag:
-        description: The release tag
+        description: Release tag
         required: true
         default: v1.0.0
       release-changelog:
-        description: No release changelog provided
+        description: Version changelog
         required: true
-        default: v1.0.0
+        default: No release changelog provided
 
 jobs:
   build-notification-hub-models-package:
