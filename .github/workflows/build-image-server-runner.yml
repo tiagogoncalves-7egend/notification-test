@@ -16,4 +16,5 @@ jobs:
     permissions: write-all
     secrets: inherit
     with:
+      DOCKERFILE_PATH: server/runner/Dockerfile
       CONTEXT_PATH: server/runner/
