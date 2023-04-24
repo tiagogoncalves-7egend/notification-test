@@ -12,14 +12,19 @@ env:
   PACKAGE_REGISTRY: https://npm.pkg.github.com
 
 jobs:
-  build-notification-hub-models-package:
-    uses: 7egend/workflows/.github/workflows/build-npm-package.yml@main
-    secrets: inherit
-    with:
-      SLACK_CHANNEL: hub
-      AUTHOR_NAME: Tiago Barros
-      PROJECT_NAME: Workflows
-      RELEASE_TAG: ${{ inputs.tag }}
-      RELEASE_CHANGELOG: Hardcoded value
-      LINKS_SOURCE_CODE: https://gitlab.com/7egend/projects/home/other/tests/apagame
-      LINKS_REGISTRY: https://gitlab.com/7egend/projects/home/other/tests/apagame/registry
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Testing"
+        run: echo "Testing"
+  # build-notification-hub-models-package:
+  #   uses: 7egend/workflows/.github/workflows/build-npm-package.yml@main
+  #   secrets: inherit
+  #   with:
+  #     SLACK_CHANNEL: hub
+  #     AUTHOR_NAME: Tiago Barros
+  #     PROJECT_NAME: Workflows
+  #     RELEASE_TAG: ${{ inputs.tag }}
+  #     RELEASE_CHANGELOG: Hardcoded value
+  #     LINKS_SOURCE_CODE: https://gitlab.com/7egend/projects/home/other/tests/apagame
+  #     LINKS_REGISTRY: https://gitlab.com/7egend/projects/home/other/tests/apagame/registry
