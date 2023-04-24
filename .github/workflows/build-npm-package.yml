@@ -1,12 +1,34 @@
-name: Build notification-hub-models package
-
 on:
-  workflow_dispatch:
+  workflow_call:
     inputs:
-      tag:
-        description: The released tag
-        required: true
+      SLACK_CHANNEL:
+        description: The Slack channel name to post the notification
         type: string
+        required: true
+      AUTHOR_NAME:
+        description: The author's fullname
+        type: string
+        required: true
+      PROJECT_NAME:
+        description: The project name
+        type: string
+        required: true
+      RELEASE_TAG:
+        description: The release tag
+        type: string
+        required: true
+      RELEASE_CHANGELOG:
+        description: The changelog of the release
+        type: string
+        required: true
+      LINKS_SOURCE_CODE:
+        description: The url of the repository that published the new package
+        type: string
+        required: true
+      LINKS_REGISTRY:
+        description: The registry url that contains all packages
+        type: string
+        required: true
 
 env:
   PACKAGE_REGISTRY: https://npm.pkg.github.com
@@ -45,13 +67,13 @@ jobs:
     secrets: inherit
     needs: build-and-publish-npm-package
     with:
-      SLACK_CHANNEL: hub
-      AUTHOR_NAME: Tiago Barros
-      PROJECT_NAME: Workflows
-      RELEASE_TAG: ${{ inputs.tag }}
-      RELEASE_CHANGELOG: Hardcoded value
-      LINKS_SOURCE_CODE: https://gitlab.com/7egend/projects/home/other/tests/apagame
-      LINKS_REGISTRY: https://gitlab.com/7egend/projects/home/other/tests/apagame/registry
+      SLACK_CHANNEL: ${{ inputs.SLACK_CHANNEL }}
+      AUTHOR_NAME: ${{ inputs.AUTHOR_NAME }}
+      PROJECT_NAME: ${{ inputs.PROJECT_NAME }}
+      RELEASE_TAG: ${{ inputs.RELEASE_TAG }}
+      RELEASE_CHANGELOG: ${{ inputs.RELEASE_CHANGELOG }}
+      LINKS_SOURCE_CODE: $${{ LINKS_SOURCE_CODE }}
+      LINKS_REGISTRY: $${{ LINKS_REGISTRY }}
 
   post-failed-npm-package-notification:
     runs-on: ubuntu-latest
