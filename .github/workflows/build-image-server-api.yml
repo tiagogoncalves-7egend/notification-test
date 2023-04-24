@@ -16,4 +16,5 @@ jobs:
     permissions: write-all
     secrets: inherit
     with:
-      CONTEXT_PATH: server/api/
+      DOCKERFILE_PATH: server/api/Dockerfile
+      CONTEXT_PATH: server/api
