@@ -3,10 +3,18 @@ name: Build notification-hub-models package
 on:
   workflow_dispatch:
     inputs:
-      RELEASE_TAG:
-        description: 'The release tag'
+      slack-channel:
+        description: The Slack channel name to post the notification
         required: true
-        default: 'v1.0.0'
+        default: hub
+      release-tag:
+        description: The release tag
+        required: true
+        default: v1.0.0
+      release-changelog:
+        description: No release changelog provided
+        required: true
+        default: v1.0.0
 
 jobs:
   build-notification-hub-models-package:
@@ -17,10 +25,10 @@ jobs:
         contents: read
     with:
       package-path: ./packages/nodejs/models
-      SLACK_CHANNEL: hub
-      AUTHOR_NAME: Tiago Barros
-      PROJECT_NAME: Workflows
-      RELEASE_TAG: ${{ inputs.RELEASE_TAG }}
-      RELEASE_CHANGELOG: Hardcoded value
-      LINKS_SOURCE_CODE: https://gitlab.com/7egend/projects/home/other/tests/apagame
-      LINKS_REGISTRY: https://gitlab.com/7egend/projects/home/other/tests/apagame/registry
+      slack-channel: ${{ slack-channel }}
+      author-name: Tiago Barros
+      project-name: Workflows
+      release-tag: ${{ inputs.release-tag }}
+      release-changelog: ${{ inputs.release-changelog }}
+      links-source-code: https://gitlab.com/7egend/projects/home/other/tests/apagame
+      links-registry: https://gitlab.com/7egend/projects/home/other/tests/apagame/registry
