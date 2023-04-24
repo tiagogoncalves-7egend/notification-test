@@ -16,7 +16,7 @@ jobs:
         packages: write
         contents: read
     with:
-      project-path: ./packages/nodejs/models
+      package-path: ./packages/nodejs/models
       SLACK_CHANNEL: hub
       AUTHOR_NAME: Tiago Barros
       PROJECT_NAME: Workflows
