@@ -17,4 +17,4 @@ jobs:
     secrets: inherit
     with:
       DOCKERFILE_PATH: server/runner/Dockerfile
-      CONTEXT_PATH: server/runner/
+      CONTEXT_PATH: server/runner
