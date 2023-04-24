@@ -1,0 +1,28 @@
+name: Deploy
+ 
+on:
+  workflow_dispatch:
+    inputs:
+      DEPLOY_TARGET:
+        required: true
+        type: string
+      IMAGE_VERSION:
+        required: true
+        type: string
+
+jobs:
+  production-notification-hub-runner:
+    uses: 7egend/workflows/.github/workflows/deploy.yml@main
+    if: ${{ inputs.DEPLOY_TARGET == 'deploy:production:notification-hub:runner' }}
+    with:
+      DEPLOYER_IMAGE: ghcr.io/${{ github.repository }}:${{ inputs.DEPLOY_TARGET }}
+      PLAYBOOK: playbooks/production/notification-hub/deploy.yaml
+    secrets: inherit
+    
+  production-notification-hub-api:
+    uses: 7egend/workflows/.github/workflows/deploy.yml@main
+    if: ${{ inputs.DEPLOY_TARGET == 'deploy:production:notification-hub:api' }}
+    with:
+      DEPLOYER_IMAGE: ghcr.io/${{ github.repository }}:${{ inputs.DEPLOY_TARGET }}
+      PLAYBOOK: playbooks/production/notification-hub/deploy.yaml
+    secrets: inherit
