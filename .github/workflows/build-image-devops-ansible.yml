@@ -1,0 +1,22 @@
+
+ 
+
+name: Build devops/ansible docker image
+
+on:
+  workflow_dispatch:
+  push:
+   branches:    
+     - main
+   tags:
+     - '*.*.*'
+   paths:
+     - 'devops/ansible/**'
+
+jobs:
+  build-image:
+    uses: 7egend/workflows/.github/workflows/build.yml@main
+    permissions: write-all
+    secrets: inherit
+    with:
+      CONTEXT_PATH: devops/ansible
