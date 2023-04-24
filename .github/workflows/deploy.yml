@@ -15,7 +15,7 @@ jobs:
     uses: 7egend/workflows/.github/workflows/deploy.yml@main
     if: ${{ inputs.DEPLOY_TARGET == 'deploy:production:notification-hub:runner' }}
     with:
-      DEPLOYER_IMAGE: ghcr.io/${{ github.repository }}:${{ inputs.DEPLOY_TARGET }}
+      DEPLOYER_IMAGE: ghcr.io/${{ github.repository }}:${{ inputs.IMAGE_VERSION }}
       PLAYBOOK: playbooks/production/notification-hub/deploy.yaml
     secrets: inherit
     
@@ -23,6 +23,6 @@ jobs:
     uses: 7egend/workflows/.github/workflows/deploy.yml@main
     if: ${{ inputs.DEPLOY_TARGET == 'deploy:production:notification-hub:api' }}
     with:
-      DEPLOYER_IMAGE: ghcr.io/${{ github.repository }}:${{ inputs.DEPLOY_TARGET }}
+      DEPLOYER_IMAGE: ghcr.io/${{ github.repository }}:${{ inputs.IMAGE_VERSION }}
       PLAYBOOK: playbooks/production/notification-hub/deploy.yaml
     secrets: inherit
