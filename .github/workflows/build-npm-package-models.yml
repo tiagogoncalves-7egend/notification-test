@@ -16,6 +16,9 @@ jobs:
   build-notification-hub-models-package:
     uses: ./.github/workflows/release-npm-package.yml
     secrets: inherit
+    permissions:
+        packages: write
+        contents: read
     # with:
     #   SLACK_CHANNEL: hub
     #   AUTHOR_NAME: Tiago Barros
