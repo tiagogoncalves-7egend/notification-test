@@ -10,7 +10,6 @@ on:
       release-tag:
         description: Release tag
         required: true
-        default: v1.0.0
       release-changelog:
         description: Version changelog
         required: true
