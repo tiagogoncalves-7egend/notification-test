@@ -1,0 +1,10 @@
+# Backend s3 credentials
+*.hcl
+
+# terraform directories and private files
+.terraform/*
+
+*.tfstate
+*.tfstate.*
+
+*.tfvars

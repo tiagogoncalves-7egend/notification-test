@@ -1,0 +1,51 @@
+# -------------------------------------
+# Copy application files to target.
+# -------------------------------------
+- name: ensure destination directory exists
+  ansible.builtin.file:
+    path: "{{ amqp_project_src }}"
+    state: directory
+    recurse: yes
+
+- name: synchronize project folder
+  ansible.posix.synchronize:
+    src: ./
+    dest: "{{ amqp_project_src }}"
+    delete: yes
+    recursive: yes
+
+- name: render docker-compose.yaml file
+  ansible.builtin.template:
+    src: "{{ item }}"
+    dest: "{{ amqp_project_src }}/{{ item }}"
+    mode: u=rx
+  loop:
+    - docker-compose.yaml
+
+# -------------------------------------
+# Login so we can pull missing images.
+# -------------------------------------
+- name: Log into docker registry
+  community.docker.docker_login:
+    registry_url: "{{ gitlab_registry_url }}"
+    username: "{{ gitlab_username }}"
+    password: "{{ gitlab_password }}"
+
+# -------------------------------------
+# Restart services and check if they
+# are running.
+# -------------------------------------
+- name: Start new services and recreate existing ones
+  community.docker.docker_compose:
+    project_src: "{{ amqp_project_src }}"
+    restarted: yes
+    recreate: always
+    state: present
+
+# -------------------------------------
+# Log out.
+# -------------------------------------
+- name: Log out from registry
+  community.docker.docker_login:
+    registry_url: "{{ gitlab_registry_url }}"
+    state: absent

@@ -1,0 +1,16 @@
+{
+  "include": [
+    "src/**/*"
+  ],
+  "compilerOptions": {
+    "outDir": "./lib",
+    "module": "commonjs",
+    "lib": [
+      "ES2021.String",
+    ],
+    "declaration": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+  },
+  "extends": "@tsconfig/node14/tsconfig.json"
+}

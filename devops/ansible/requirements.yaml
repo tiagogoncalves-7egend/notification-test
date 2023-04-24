@@ -1,0 +1,12 @@
+roles:
+  - src: git@gitlab.com:7egend/projects/home/ansible/roles/provisioning.git
+    scm: git
+    version: "0.4.0"
+
+collections:
+  - name: ansible.posix # For provisiong role
+    version: "1.4.0"
+  - name: devsec.hardening # For provisiong role
+    version: "8.2.0"
+  - name: community.docker 
+    version: "2.7.1"

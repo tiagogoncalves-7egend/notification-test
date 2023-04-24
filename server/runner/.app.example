@@ -1,0 +1,14 @@
+# Queue credentials and listening queue.
+AMQP_URL=amqp://runner:<amqp-password>@localhost:5672
+AMQP_QUEUE=notifications
+
+# Azure credentials.
+AZURE_ORG_URL=<azure-org-url>
+AZURE_ACCESS_TOKEN=<azure-access-token>
+
+# Logging.
+LOG_LEVEL=debug
+LOG_NAME=notification-hub-runner
+
+# Slack Web API credentials.
+SLACK_ACCESS_TOKEN=<slack-access-token>

@@ -1,0 +1,51 @@
+{
+  "name": "@7egend/notification-hub-models",
+  "version": "0.0.0",
+  "description": "Shared models for notification hub",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "files": [
+    "/lib"
+  ],
+  "scripts": {
+    "prettier:base": "prettier --parser typescript --single-quote",
+    "prettier:check": "npm run prettier:base -- --list-different \"src/**/*.{ts,tsx}\"",
+    "prettier:write": "npm run prettier:base -- --write \"src/**/*.{ts,tsx}\"",
+    "build": "tsc",
+    "clean": "rm -rf ./lib",
+    "test": "jest --coverage",
+    "test:watch": "yarn test --watchAll"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@gitlab.com:7egend/footlab/packages/nodejs/velocity.git"
+  },
+  "keywords": [
+    "notification",
+    "notification-hub",
+    "hub",
+    "slack",
+    "azure",
+    "devops",
+    "message",
+    "dm"
+  ],
+  "author": "7EGEND",
+  "license": "ISC",
+  "peerDependencies": {
+    "fp-ts": "^2.11.1",
+    "zod": "^3.20.2"
+  },
+  "devDependencies": {
+    "@tsconfig/node14": "^1.0.0",
+    "@types/jest": "^29.2.4",
+    "@types/node": "^14.0.13",
+    "fp-ts": "^2.11.1",
+    "jest": "^26.6.3",
+    "prettier": "^2.2.1",
+    "ts-jest": "^26.4.4",
+    "ts-node": "^8.4.1",
+    "typescript": "^4.1.5",
+    "zod": "^3.20.2"
+  }
+}

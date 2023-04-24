@@ -1,0 +1,4 @@
+- name: Notification Hub deploy
+  hosts: production_notification_hub
+  roles:
+    - role: roles/notification-hub

@@ -1,0 +1,15 @@
+# -------------------------------------
+# Azure Devops
+# -------------------------------------
+notification_hub_runner_azure_org_url: https://dev.azure.com/7egend
+notification_hub_runner_azure_access_token: "{{ vault_notification_hub_runner_azure_access_token }}"
+
+# -------------------------------------
+# Slack
+# -------------------------------------
+notification_hub_runner_slack_access_token: "{{ vault_notification_hub_runner_slack_access_token }}"
+
+# -------------------------------------
+# API
+# -------------------------------------
+notification_hub_api_access_tokens: "{{ vault_notification_hub_api_access_tokens }}"

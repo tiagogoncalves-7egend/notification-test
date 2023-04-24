@@ -1,0 +1,64 @@
+# -------------------------------------
+# Copy application files to target.
+# -------------------------------------
+- name: Ensure destination directory exists
+  ansible.builtin.file:
+    path: "{{ gateway_project_src }}"
+    state: directory
+    recurse: yes
+
+- name: Synchronize project folder
+  ansible.posix.synchronize:
+    src: ./
+    dest: "{{ gateway_project_src }}"
+    delete: yes
+    recursive: yes
+
+- name: Render docker-compose.yaml file
+  ansible.builtin.template:
+    src: docker-compose.yaml
+    dest: "{{ gateway_project_src }}/docker-compose.yaml"
+    mode: u=rx
+
+- name: Copy .env file
+  ansible.builtin.copy:
+    src: .env
+    dest: "{{ gateway_project_src }}/.env"
+    mode: '0644'
+
+- name: Ensure directories exists
+  ansible.builtin.file:
+    path: "{{ gateway_project_src }}/{{ item }}"
+    state: directory
+    recurse: yes
+  loop:
+    - traefik/dynamic
+
+- name: Render Traefik files
+  ansible.builtin.template:
+    src: "{{ item }}"
+    dest: "{{ gateway_project_src }}/{{ item }}"
+    mode: u=rx
+  loop:
+    - traefik/static.toml
+    - traefik/dynamic/notification-hub.toml
+    - traefik/dynamic/middlewares.toml
+
+# -------------------------------------
+# Create network.
+# -------------------------------------
+- name: Create a network
+  docker_network:
+    name: "{{ gateway_network }}"
+
+# -------------------------------------
+# Restart services and check if they
+# are running.
+# -------------------------------------
+- name: Start new services and recreate existing ones
+  community.docker.docker_compose:
+    project_src: "{{ gateway_project_src }}"
+    restarted: yes
+    recreate: always
+    state: present
+    remove_orphans: yes
