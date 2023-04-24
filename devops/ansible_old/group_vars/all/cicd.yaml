@@ -1,0 +1,6 @@
+# -------------------------------------
+# Registry
+# -------------------------------------
+gitlab_registry_url: "{{ vault_gitlab_registry_url }}"
+gitlab_username: "{{ vault_gitlab_username }}"
+gitlab_password: "{{ vault_gitlab_password }}"

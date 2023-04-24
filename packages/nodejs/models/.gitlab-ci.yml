@@ -1,0 +1,55 @@
+stages:
+  - prepare
+  - build
+  - build:notify
+
+variables:
+  GIT_DEPTH: 1
+  NODE_IMAGE: node:19.6.0-alpine3.17
+
+# This job is used to define the package version based on current commit:
+# If the commit is to the default branch, than the version will be `latest`.
+# If the commit as a _TAG_, then _TAG_ will be used as the version name.
+# Note that it does not run when commiting to branches other than the default one.
+prepare:version:
+  stage: prepare
+  image: alpine:3.17
+  variables:
+    GIT_STRATEGY: none
+  script:
+    # Create a friendly name for the current project.
+    # It extracts the project name and the parent name.
+    # Example:
+    # 7egend/projects/home/devops/gitlab-runner/ansible -> gitlab-runner/ansible
+    - export CURRENT_PROJECT_NAME="$GROUP_TITLE" # Defined as cicd variable
+    # Determine the version name.
+    - export DETECTED_PACKAGE_VERSION="$([ $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH ] && echo 'latest' || echo $CI_COMMIT_TAG)"
+    - export CURRENT_PACKAGE_VERSION="$([ $DETECTED_PACKAGE_VERSION == '' ] && echo 'unknown' || echo $DETECTED_PACKAGE_VERSION)"
+    # Save exported environment values to a local file.
+    # This file will be saved as an artifact to subsequent jobs
+    - echo "CURRENT_PROJECT_NAME=$CURRENT_PROJECT_NAME" >> version.env
+    - echo "CURRENT_PACKAGE_VERSION=$CURRENT_PACKAGE_VERSION" >> version.env
+  artifacts:
+    reports:
+      dotenv: version.env
+  needs: []
+  rules:
+    - if: ($CI_PIPELINE_SOURCE == 'push' || $CI_PIPELINE_SOURCE == 'web') && $CI_COMMIT_TAG
+
+# Build the package and publish it to the package registry.
+# Note that the version name is defined in the prepare:version job.
+build:
+  image: node:19.6.0-alpine3.17
+  stage: build
+  interruptible: true
+  script:
+    - yarn
+    - yarn run build
+    - npm version $CI_COMMIT_TAG --no-git-tag-version
+    - echo "//${CI_SERVER_HOST}/api/v4/projects/${CI_PROJECT_ID}/packages/npm/:_authToken=${CI_JOB_TOKEN}" >> .npmrc
+    - npm publish
+  needs:
+    - job: prepare:version
+      artifacts: true
+  rules:
+    - if: ($CI_PIPELINE_SOURCE == 'push' || $CI_PIPELINE_SOURCE == 'web') && $CI_COMMIT_TAG

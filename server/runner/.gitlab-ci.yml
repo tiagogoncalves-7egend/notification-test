@@ -1,0 +1,27 @@
+# -------------------------------------------------
+# More info at:
+# https://gitlab.com/7egend/projects/home/devops/pipelines/templates
+# -------------------------------------------------
+include:
+ - project: 7egend/projects/home/devops/pipelines/templates
+   ref: main
+   file:
+      - /buildx/gitlab-ci.yml
+      - /deploys/triggers.yml
+
+stages:
+  - prepare
+  - build
+  - test
+  - release
+  - release:notify
+  - deploy:trigger
+
+variables:
+  SLACK_TYPE: slack-channel-members
+  SLACK_CHANNEL: devops
+  
+deploy:production:
+  extends: .deploy:production
+  variables:
+    DEPLOY_TARGET: deploy:notification-hub:runner

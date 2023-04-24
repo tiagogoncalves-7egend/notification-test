@@ -1,0 +1,20 @@
+- name: Provision for Notification Hub droplet
+  hosts: notification-hub
+  roles:
+    - provisioning
+  vars:
+    ansible_python_interpreter: /usr/bin/python3
+
+    # This role must be run as `root` because it'll execute
+    # privileged actions.
+    ansible_user: root
+
+    # Switch to enable / disable the sudoer user creation.
+    create_sudoer: yes
+
+    # Switch to enable / disable the deployer user creation.
+    create_deployer: yes
+
+    # TCP forwarding should be allowed if you intend to,
+    # for example, access databases through SSH on this target.
+    ssh_allow_tcp_forwarding: "yes"

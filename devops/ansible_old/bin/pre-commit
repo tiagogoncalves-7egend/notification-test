@@ -1,0 +1,20 @@
+#!/bin/sh
+
+#
+# Ensure there is no decrypted vault file left behind before committing
+#
+
+VAULT_FILES=($(find . -name "vault.yaml"))
+
+for vFile in "${VAULT_FILES[@]}"
+do
+	:
+
+	ENCRYPTED_OK=`head -1 $vFile | grep -w "\\$ANSIBLE_VAULT"`
+
+	if [[ "$ENCRYPTED_OK" == "" ]]; then
+		echo "Found a DECRYPTED vault file [$vFile]! Please encrypt if before committing."
+		exit 1
+	fi
+
+done

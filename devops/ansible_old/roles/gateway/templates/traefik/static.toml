@@ -1,0 +1,72 @@
+# --------------------------------------------------------
+# Full example reference
+# https://doc.traefik.io/traefik/reference/static-configuration/file/
+# --------------------------------------------------------
+
+
+# --------------------------------------------------------
+# Log settings:
+# https://docs.traefik.io/observability/logs/     
+# --------------------------------------------------------
+[log]
+format = "json"
+level = "INFO" # <== Setting the level of the logs from traefik.
+#     Options: ERROR, DEBUG, PANIC, FATAL, WARN, INFO
+
+# --------------------------------------------------------
+# API & Dashboard Settings
+# https://docs.traefik.io/operations/api/
+# https://docs.traefik.io/operations/api/#endpoints
+# --------------------------------------------------------
+[api]
+insecure = true # <== Enabling insecure api, NOT RECOMMENDED FOR PRODUCTION
+dashboard = true # <== Enabling the dashboard to view services, middlewares, routers, etc...
+debug = true # <== Enabling additional endpoints for debugging and profiling
+
+# --------------------------------------------------------
+# Access Logs Settings
+# https://doc.traefik.io/traefik/observability/access-logs/
+# --------------------------------------------------------
+[accessLog]
+format = "json"
+
+# --------------------------------------------------------
+# Tracing settings
+# https://doc.traefik.io/traefik/observability/tracing/overview/
+# --------------------------------------------------------
+#[tracing]
+#  # Workaround for the non support of Correlation/Request Id Header
+#  # - https://github.com/traefik/traefik/issues/4640
+#  # - https://github.com/traefik/traefik/pull/6707#issuecomment-640429009
+#  [tracing.jaeger]
+#    samplingParam = 0
+#    traceContextHeaderName = "X-Correlation-Id"
+
+# --------------------------------------------------------
+# Provider Settings
+# https://doc.traefik.io/traefik/providers/overview/
+# --------------------------------------------------------
+[providers.file]
+directory = "/etc/traefik/dynamic" # <== Referring to a dynamic configuration file
+watch = true
+
+# --------------------------------------------------------
+# Entrypoints:
+# https://doc.traefik.io/traefik/routing/entrypoints/
+# --------------------------------------------------------
+[entryPoints.http]
+address = ":80"
+
+[entryPoints.https]
+address = ":443"
+
+#{% if self_signed_certificate is not defined %}
+  # --------------------------------------------------------
+  # Certificate Resolvers (Lets Encrypt)
+  # https://doc.traefik.io/traefik/https/acme/
+  # --------------------------------------------------------
+  [certificatesResolvers.AcmeResolver.acme]
+    email = "{{ gateway_traefik_acme_email }}"
+    storage = "/letsencrypt/acme.json"
+  [certificatesResolvers.AcmeResolver.acme.tlsChallenge]
+#{% endif %}

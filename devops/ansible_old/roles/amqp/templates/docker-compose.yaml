@@ -1,0 +1,23 @@
+version: "3.6"
+
+services:
+  rabbitmq:
+    image: {{ amqp_rabbitmq_docker_image }}
+    restart: always
+    ports:
+      - {{ amqp_rabbitmq_port }}:5672
+      - {{ amqp_rabbitmq_management }}:15672
+    environment:
+      - hostname={{ amqp_rabbitmq_hostname }}
+      - RABBITMQ_DEFAULT_USER={{ amqp_rabbitmq_username }}
+      - RABBITMQ_DEFAULT_PASS={{ amqp_rabbitmq_password }}
+    volumes:
+      - rabbitmq-data:/var/lib/rabbitmq
+    networks:
+      - amqp
+
+networks:
+  amqp:
+
+volumes:
+  rabbitmq-data:

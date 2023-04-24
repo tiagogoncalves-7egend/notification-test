@@ -1,0 +1,14 @@
+all:
+  hosts:
+    # -------------------------------------
+    # Production
+    # -------------------------------------
+    production_notification_hub:
+
+  children:
+    # -------------------------------------
+    # Hosts grouped by environment
+    # -------------------------------------
+    production:
+      hosts:
+        production_notification_hub:

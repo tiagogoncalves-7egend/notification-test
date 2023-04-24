@@ -1,0 +1,20 @@
+# -------------------------------------
+# Gateway
+# -------------------------------------
+gateway_traefik_docker_image: traefik:v2.8.8
+gateway_network: gateway
+gateway_traefik_http_port: 80
+gateway_traefik_https_port: 443
+
+# -------------------------------------
+# Notification Hub
+# -------------------------------------
+notification_hub_runner_docker_image: registry.gitlab.com/7egend/projects/home/microservices/notification-hub/server/runner:2.2.0
+notification_hub_api_docker_image: registry.gitlab.com/7egend/projects/home/microservices/notification-hub/server/api:0.2.6
+
+# -------------------------------------
+# AMQP
+# -------------------------------------
+amqp_rabbitmq_docker_image: rabbitmq:3.11.7-management
+amqp_rabbitmq_port: 5672
+amqp_rabbitmq_management: 15672

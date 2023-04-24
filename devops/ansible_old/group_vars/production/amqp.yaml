@@ -1,0 +1,7 @@
+# -------------------------------------
+# RabbitMQ
+# -------------------------------------
+amqp_rabbitmq_username: runner
+amqp_rabbitmq_password: "{{ vault_amqp_rabbitmq_password }}"
+amqp_rabbitmq_hostname: "{{ notification_hub_private_ip }}"
+amqp_connection_string: "amqp://{{ amqp_rabbitmq_username }}:{{ amqp_rabbitmq_password }}@{{ amqp_rabbitmq_hostname }}:{{ amqp_rabbitmq_port }}"

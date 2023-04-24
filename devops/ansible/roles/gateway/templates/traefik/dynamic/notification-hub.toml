@@ -1,0 +1,19 @@
+
+[http.routers.notification-hub-http]
+entryPoints = ["http"]
+rule = "Host(`{{ notification_hub_domain }}`)"
+middlewares = ["redirect@file"]
+service = "notification-hub@file"
+
+[http.routers.notification-hub-https]
+entryPoints = ["https"]
+rule = "Host(`{{ notification_hub_domain }}`)"
+service = "notification-hub@file"
+	[http.routers.notification-hub-https.tls]
+	certResolver = "AcmeResolver"
+
+# -------------------------------------
+# Notification Hub upstream service
+# -------------------------------------
+[[http.services.notification-hub.loadBalancer.servers]]
+	url = "{{ gateway_notification_hub_service_url }}"

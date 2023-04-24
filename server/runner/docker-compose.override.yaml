@@ -1,0 +1,19 @@
+version: "3.6"
+
+services:
+  rabbitmq:
+    image: rabbitmq:3.7.18-management
+    restart: "no"
+    hostname: "rabbitmq"
+    ports:
+      - ${AMQP_PORT:-5672}:5672
+      - ${AMQP_API_PORT:-15672}:15672
+    environment:
+      - hostname=rabbitmq
+      - RABBITMQ_DEFAULT_USER=runner
+      - RABBITMQ_DEFAULT_PASS=${RABBITMQ_PASSWORD?}
+    volumes:
+      - rabbitmq-data:/var/lib/rabbitmq
+
+volumes:
+  rabbitmq-data:
