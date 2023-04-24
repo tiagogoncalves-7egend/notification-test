@@ -30,5 +30,3 @@ jobs:
       project-name: ${{ github.event.repository.name }}
       release-tag: ${{ inputs.release-tag }}
       release-changelog: ${{ inputs.release-changelog }}
-      links-source-code: ${{ github.repositoryUrl }}
-      links-registry: https://gitlab.com/7egend/projects/home/other/tests/apagame/registry
