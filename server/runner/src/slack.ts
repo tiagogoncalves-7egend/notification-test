@@ -129,7 +129,7 @@ const composeNewNpmPackageVersion = ({
         attachment('#d51961', [
             sectionBlock([
                 markdown(
-                    `\`\`\`AUTHOR: ${author}\nPROJECT URL: ${sourceCode}\n--------------------\PACKAGE URL:\n${registry}\n--------------------\nCHANGELOG:\n${release.changelog}\`\`\``
+                    `\`\`\`AUTHOR: ${author}\nPROJECT URL: ${sourceCode}\n--------------------\nPACKAGE URL:\n${registry}\n--------------------\nCHANGELOG:\n${release.changelog}\`\`\``
                 ),
             ]),
         ]),
