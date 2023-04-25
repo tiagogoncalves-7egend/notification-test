@@ -1,4 +1,4 @@
-name: Build notification-hub-models package
+name: Release notification-hub-models package
 
 on:
   workflow_dispatch:
@@ -10,11 +10,9 @@ on:
       release-tag:
         description: Release tag
         required: true
-        default: v1.0.0
       release-changelog:
         description: Version changelog
         required: true
-        default: No release changelog provided
 
 jobs:  
   release-notification-hub-models-package:
@@ -30,5 +28,3 @@ jobs:
       project-name: ${{ github.event.repository.name }}
       release-tag: ${{ inputs.release-tag }}
       release-changelog: ${{ inputs.release-changelog }}
-      links-source-code: ${{ github.repositoryUrl }}
-      links-registry: https://gitlab.com/7egend/projects/home/other/tests/apagame/registry

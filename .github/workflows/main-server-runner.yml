@@ -1,0 +1,28 @@
+name: Build and deploy server/runner docker image
+
+on:
+  workflow_dispatch:
+  push:
+    branches:    
+      - main
+    tags:
+      - '*.*.*'
+    paths:
+      - 'server/runner/**'
+
+jobs:
+  build-image:
+    uses: 7egend/workflows/.github/workflows/build.yml@main
+    permissions: write-all
+    secrets: inherit
+    with:
+      DOCKERFILE_PATH: server/runner/Dockerfile
+      CONTEXT_PATH: server/runner
+
+  deploy-production-notification-hub-runner:
+    uses: 7egend/workflows/.github/workflows/deploy.yml@main
+    with:
+      DEPLOYER_IMAGE: ghcr.io/${{ github.repository }}/server/runner:latest
+      PLAYBOOK: playbooks/production/notification-hub/deploy.yaml
+    secrets: inherit
+    needs: build-image

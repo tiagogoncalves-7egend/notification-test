@@ -4,8 +4,8 @@
 
 "@7egend/notification-hub-models@^0.2.4":
   version "0.2.4"
-  resolved "https://gitlab.com/api/v4/projects/43529951/packages/npm/@7egend/notification-hub-models/-/@7egend/notification-hub-models-0.2.4.tgz#30283c662679a612db849d4ab599053dae2bf49d"
-  integrity sha1-MCg8ZiZ5phLbhJ1KtZkFPa4r9J0=
+  resolved "https://npm.pkg.github.com/download/@7egend/notification-hub-models/0.2.4/8c64984a1095116119fade51142835a1161fa1b9#8c64984a1095116119fade51142835a1161fa1b9"
+  integrity sha512-DZjOq0PJ2w5/uWcOtrmyBgWWEOqAsSbrNPl5qsdS0NnfnwLr6i4eKKb6comXl14ZXmrTJN/t7pD8IJ4ALGEFSA==
 
 "@acuminous/bitsyntax@^0.1.2":
   version "0.1.2"

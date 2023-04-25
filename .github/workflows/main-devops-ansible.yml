@@ -1,8 +1,15 @@
-name: Build devops/ansible docker image
+name: Build server/runner docker image
 
 on:
   workflow_dispatch:
-
+  push:
+    branches:    
+      - main
+    tags:
+      - '*.*.*'
+    paths:
+      - 'devops/ansible/**'
+      
 jobs:
   build-image:
     uses: 7egend/workflows/.github/workflows/build.yml@main

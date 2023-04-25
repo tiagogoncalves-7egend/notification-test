@@ -1,0 +1,28 @@
+name: Build and deploy server/api docker image
+
+on:
+  workflow_dispatch:
+  push:
+    branches:    
+      - main
+    tags:
+      - '*.*.*'
+    paths:
+      - 'server/api/**'
+
+jobs:
+  build-image:
+    uses: 7egend/workflows/.github/workflows/build.yml@main
+    permissions: write-all
+    secrets: inherit
+    with:
+      DOCKERFILE_PATH: server/api/Dockerfile
+      CONTEXT_PATH: server/api
+
+  deploy-production-notification-hub-api:
+    uses: 7egend/workflows/.github/workflows/deploy.yml@main
+    with:
+      DEPLOYER_IMAGE: ghcr.io/${{ github.repository }}/server/api:latest
+      PLAYBOOK: playbooks/production/notification-hub/deploy.yaml
+    secrets: inherit
+    needs: build-image
