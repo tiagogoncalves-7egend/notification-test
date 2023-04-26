@@ -15,7 +15,7 @@ on:
 
 jobs:
   devops-ansible:
-    if: ${{ github.event_path | contains('devops/ansible') || github.event.client_payload.inputs.PROJECT == 'devops/ansible' }}
+    if: ${{ contains(github.event.changes, 'devops/ansible') || inputs.PROJECT == 'devops/ansible' }}
     uses: 7egend/workflows/.github/workflows/build.yml@main
     permissions: write-all
     secrets: inherit
@@ -24,7 +24,7 @@ jobs:
       CONTEXT_PATH: devops/ansible
 
   server-runner:
-    if: ${{ github.event_path | contains('server/runner') || github.event.client_payload.inputs.PROJECT == 'server/runner' }}
+    if: ${{ contains(github.event.changes, 'server/runner') || inputs.PROJECT == 'server/runner' }}
     uses: 7egend/workflows/.github/workflows/build.yml@main
     permissions: write-all
     secrets: inherit
@@ -33,7 +33,7 @@ jobs:
       CONTEXT_PATH: server/runner
       
   server-api:
-    if: ${{ github.event_path | contains('server/api') || github.event.client_payload.inputs.PROJECT == 'server/api' }}
+    if: ${{ contains(github.event.changes, 'server/api') || inputs.PROJECT == 'server/api' }}
     uses: 7egend/workflows/.github/workflows/build.yml@main
     permissions: write-all
     secrets: inherit
