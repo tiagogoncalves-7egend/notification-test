@@ -14,6 +14,12 @@ on:
           - server/api
 
 jobs:
+  echo-vars:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Imprimir valor de github.event.changes
+        run: echo "${{ github.event.changes }}"
+  
   devops-ansible:
     if: ${{ contains(github.event.changes, 'devops/ansible') || inputs.PROJECT == 'devops/ansible' }}
     uses: 7egend/workflows/.github/workflows/build.yml@main
