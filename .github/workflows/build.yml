@@ -1,0 +1,14 @@
+name: Build job
+
+on:
+  workflow_dispatch:
+  push:
+      
+jobs:
+  build-image:
+    uses: 7egend/workflows/.github/workflows/build.yml@main
+    permissions: write-all
+    secrets: inherit
+    with:
+      DOCKERFILE_PATH: devops/ansible/Dockerfile
+      CONTEXT_PATH: devops/ansible
