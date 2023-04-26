@@ -1,14 +1,43 @@
-name: Build job
+name: Build container image
 
 on:
-  workflow_dispatch:
   push:
-      
+  workflow_dispatch:
+    inputs:
+      PROJECT:
+        description: 'Project to build'
+        required: true
+        type: choice
+        options:
+          - devops/ansible
+          - server/runner
+          - server/api
+
 jobs:
-  build-image:
+  devops-ansible:
+    if: ${{ github.event_path | contains('devops/ansible') || github.event.client_payload.inputs.PROJECT == 'devops/ansible' }}
     uses: 7egend/workflows/.github/workflows/build.yml@main
     permissions: write-all
     secrets: inherit
     with:
       DOCKERFILE_PATH: devops/ansible/Dockerfile
       CONTEXT_PATH: devops/ansible
+
+  server-runner:
+    if: ${{ github.event_path | contains('server/runner') || github.event.client_payload.inputs.PROJECT == 'server/runner' }}
+    uses: 7egend/workflows/.github/workflows/build.yml@main
+    permissions: write-all
+    secrets: inherit
+    with:
+      DOCKERFILE_PATH: server/runner/Dockerfile
+      CONTEXT_PATH: server/runner
+      
+  server-api:
+    if: ${{ github.event_path | contains('server/api') || github.event.client_payload.inputs.PROJECT == 'server/api' }}
+    uses: 7egend/workflows/.github/workflows/build.yml@main
+    permissions: write-all
+    secrets: inherit
+    with:
+      DOCKERFILE_PATH: server-api/Dockerfile
+      CONTEXT_PATH: server-api
+    
