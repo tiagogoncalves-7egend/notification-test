@@ -20,9 +20,9 @@ jobs:
         id: set_version
         run: |
           if [[ ${{ github.ref }} == 'refs/heads/main' ]]; then
-            echo "::set-output name=version::latest"
+            echo "version=latest" >> "$GITHUB_OUTPUT"
           elif [[ ${{ github.ref }} == refs/tags/* ]]; then
-            echo "::set-output name=version::${{ github.ref }}"
+            echo "version=${{ github.ref }}" >> "$GITHUB_OUTPUT"
           fi
       - run: echo ${{ needs.prepare.outputs.version }}
   
