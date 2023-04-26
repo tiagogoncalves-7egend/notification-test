@@ -24,5 +24,8 @@ jobs:
     with:
       DEPLOYER_IMAGE: ghcr.io/${{ github.repository }}/server/runner:latest
       PLAYBOOK: playbooks/production/notification-hub/deploy.yaml
-    secrets: inherit
+      KNOWN_HOSTS_FILE: $KNOWN_HOSTS_FILE
+    secrets:
+      CI_BOT_SSH_PRIVATE_KEY: ${{ secrets.CI_BOT_SSH_PRIVATE_KEY }}
+      ANSIBLE_VAULT_PASSWORD: ${{ secrets.VAULT_PASSWORD }}
     needs: build-image
