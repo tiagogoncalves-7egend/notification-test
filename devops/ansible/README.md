@@ -15,5 +15,5 @@ For example, to deploy the notification-hub, you would run:
 
     ansible-playbook playbooks/notification-hub/deploy.yaml
 
-You can customize the behavior of the playbooks by modifying the variables in the `group_vars/all` directory. 
+You can customize the behavior of the playbooks by modifying the variables in the `group_vars/all` directory.  
 
