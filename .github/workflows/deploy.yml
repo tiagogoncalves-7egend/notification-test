@@ -17,7 +17,7 @@ on:
       ENVIRONMENT:
         required: true
         type: choice
-        description: Container image to deploy
+        description: Environment target
         options: 
         - production
 
@@ -30,7 +30,9 @@ jobs:
       PLAYBOOK: playbooks/${{ inputs.ENVIRONMENT }}/notification-hub/deploy.yaml
       ENVIRONMENT: ${{ inputs.ENVIRONMENT }}
       KNOWN_HOSTS_FILE: ${{ vars.KNOWN_HOSTS_FILE }}
-    secrets: inherit
+    secrets:
+      CI_BOT_SSH_PRIVATE_KEY: ${{ secrets.CI_BOT_SSH_PRIVATE_KEY }}
+      ANSIBLE_VAULT_PASSWORD: ${{ secrets.VAULT_PASSWORD }}
     
   production-notification-hub-api:
     uses: 7egend/workflows/.github/workflows/deploy.yml@main
@@ -40,4 +42,6 @@ jobs:
       PLAYBOOK: playbooks/${{ inputs.ENVIRONMENT }}/notification-hub/deploy.yaml
       ENVIRONMENT: ${{ inputs.ENVIRONMENT }}
       KNOWN_HOSTS_FILE: ${{ vars.KNOWN_HOSTS_FILE }}
-    secrets: inherit
+    secrets:
+      CI_BOT_SSH_PRIVATE_KEY: ${{ secrets.CI_BOT_SSH_PRIVATE_KEY }}
+      ANSIBLE_VAULT_PASSWORD: ${{ secrets.VAULT_PASSWORD }}
