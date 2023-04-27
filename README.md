@@ -1,3 +1,7 @@
+![Devops Ansible workflow](https://github.com/7egend/notification-hub/actions/workflows/main-devops-ansible.yml/badge.svg) <br/>
+![Server Runner workflow](https://github.com/7egend/notification-hub/actions/workflows/main-server-runner.yml/badge.svg) <br/>
+![Server Api workflow](https://github.com/7egend/notification-hub/actions/workflows/main-server-api.yml/badge.svg)
+
 # Notification Hub
 
 This repository contains all models that should be honored by all _Notification Hub_ components. Specifically, it defines the target platforms that can receive notifications, as well as the notification's content.
