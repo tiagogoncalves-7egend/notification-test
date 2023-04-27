@@ -178,6 +178,24 @@ New _NPM_ package version:
 }
 ```
 
+Failed _NPM_ package version:
+
+```json
+{
+  "type": "FailedNpmPackageVersion",
+  "group": "project-group",
+  "release": {
+    "tag": "<release-version>",
+    "changelog": "<release-description>"
+  },
+  "links": {
+    "sourceCode": "<source-code-url>",
+    "pipeline": "<pipeline-url>",
+    "registry": "<registry-url>"
+  }
+}
+```
+
 ## Publishing Changes
 
 This package should only be published using a _CI/CD_ pipeline. Check with the _DevOps_ team if you're experience any issues.
