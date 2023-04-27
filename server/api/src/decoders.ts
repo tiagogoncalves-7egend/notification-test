@@ -8,5 +8,5 @@ export const parse =
     ) =>
     (data: unknown): E.Either<z.ZodError, O> =>
         pipe(data, schema.safeParse, result =>
-            result.success ? E.right(result.data) : E.left(result.error)
+            result.success === true ? E.right(result.data) : E.left(result.error)
         )

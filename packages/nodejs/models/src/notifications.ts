@@ -78,15 +78,28 @@ const NewNpmPackageVersion = z.object({
   }),
 })
 
+const FailedNpmPackageVersion = z.object({
+  type: z.literal('FailedNpmPackageVersion'),
+  group: z.string().min(1),
+  release: Release,
+  links: z.object({
+    sourceCode: z.string().url(),
+    pipeline: z.string().url(),
+    registry: z.string().url(),
+  }),
+})
+
 export const Notification = z.union([
   SuccessfulDeployment,
   FailedDockerImage,
+  FailedNpmPackageVersion,
   NewDockerImage,
   NewDesignFile,
   NewNpmPackageVersion,
 ])
 
 export type FailedDockerImage = z.TypeOf<typeof FailedDockerImage>
+export type FailedNpmPackageVersion = z.TypeOf<typeof FailedNpmPackageVersion>
 export type Notification = z.TypeOf<typeof Notification>
 export type NewDesignFile = z.TypeOf<typeof NewDesignFile>
 export type NewDockerImage = z.TypeOf<typeof NewDockerImage>

@@ -187,15 +187,15 @@ If you still need to publish it manually, run the following 2 commands:
 Build the package to lib/ folder.
 
 ```bash
-yarn run build
+pnpm build
 ```
 
 Publish the built `lib` folder to the package registry:
 
 ```bash
-npm publish
+pnpm publish
 ```
 
 ```bash
-npm publish
+pnpm publish
 ```

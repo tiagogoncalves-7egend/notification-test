@@ -12,6 +12,7 @@ import {
 import { pipe } from 'fp-ts/lib/function'
 import {
     FailedDockerImage,
+    FailedNpmPackageVersion,
     NewDesignFile,
     NewDockerImage,
     NewNpmPackageVersion,
@@ -29,6 +30,8 @@ export const compose = (notification: Notification) =>
         ? composeNewDockerImage(notification)
         : notification.type === 'NewNpmPackageVersion'
         ? composeNewNpmPackageVersion(notification)
+        : notification.type === 'FailedNpmPackageVersion'
+        ? composeFailedNpmPackageVersion(notification)
         : composeNewDesignFile(notification)
 
 const composeSuccessfulDeployment = ({
@@ -131,6 +134,27 @@ const composeNewNpmPackageVersion = ({
                 markdown(
                     `\`\`\`AUTHOR: ${author}\nPROJECT URL: ${sourceCode}\n--------------------\nPACKAGE URL:\n${registry}\n--------------------\nCHANGELOG:\n${release.changelog}\`\`\``
                 ),
+            ]),
+        ]),
+    ]),
+})
+
+const composeFailedNpmPackageVersion = ({
+    group,
+    release: { tag },
+    links: { sourceCode, pipeline, registry },
+}: FailedNpmPackageVersion): Message => ({
+    text: `📦 😡 ${group} did not build your NPM package (\`${tag}\`)`,
+    attachments: O.some([
+        attachment('#ff0000', [
+            sectionBlock([
+                markdown(
+                    `Something went wrong while building / pushing NPM package to:\n\`\`\`${registry}\`\`\``
+                ),
+            ]),
+            actionsBlock([
+                button('Visit Pipeline', pipeline),
+                button('View Source', sourceCode),
             ]),
         ]),
     ]),

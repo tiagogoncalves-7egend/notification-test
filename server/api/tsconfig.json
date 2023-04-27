@@ -4,11 +4,13 @@
   ],
   "compilerOptions": {
     "outDir": "./dist",
+    "target": "ES6",
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "lib": [
-      "ES2021.String",
-    ],
+    "skipLibCheck": true,
+    "skipDefaultLibCheck": true,
+    "moduleResolution": "node",
+    "allowSyntheticDefaultImports": true
   },
-  "extends": "@tsconfig/node14/tsconfig.json"
+  
 }

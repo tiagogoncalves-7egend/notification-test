@@ -1,6 +1,4 @@
-import type { Config } from '@jest/types'
-
-const config: Config.InitialOptions = {
+const config = {
   roots: ['<rootDir>/tests'],
   testMatch: [
     '**/__tests__/**/*.+(ts|tsx|js)',
