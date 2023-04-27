@@ -1,6 +1,6 @@
-![Devops Ansible workflow](https://github.com/7egend/notification-hub/actions/workflows/main-devops-ansible.yml/badge.svg) <br/>
-![Server Runner workflow](https://github.com/7egend/notification-hub/actions/workflows/main-server-runner.yml/badge.svg) <br/>
-![Server Api workflow](https://github.com/7egend/notification-hub/actions/workflows/main-server-api.yml/badge.svg)
+[![Build devops/ansible docker image](https://github.com/7egend/notification-hub/actions/workflows/build-image-devops-ansible.yml/badge.svg)](https://github.com/7egend/notification-hub/actions/workflows/build-image-devops-ansible.yml) <br/>
+[![Build and deploy server/runner docker image](https://github.com/7egend/notification-hub/actions/workflows/main-server-runner.yml/badge.svg)](https://github.com/7egend/notification-hub/actions/workflows/main-server-runner.yml) <br/>
+[![Build and deploy server/api docker image](https://github.com/7egend/notification-hub/actions/workflows/main-server-api.yml/badge.svg)](https://github.com/7egend/notification-hub/actions/workflows/main-server-api.yml)
 
 # Notification Hub
 
