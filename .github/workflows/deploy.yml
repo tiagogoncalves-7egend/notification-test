@@ -1,19 +1,15 @@
 name: Deploy
  
 on:
-  workflow_run:
-    workflows: [Build and deploy server/runner docker image]
-    types: [completed]
-    
   workflow_dispatch:
     inputs:
       DEPLOY_TARGET:
         required: true
         type: choice
         description: Container image to deploy
-        options: 
-        - production:server:runner
-        - production:server:api
+        options:
+        - server/runner
+        - server/api
       IMAGE_VERSION:
         required: true
         type: string
@@ -26,9 +22,9 @@ on:
         - production
         
 jobs:
-  production-notification-hub-runner:
+  server-runner:
     uses: 7egend/workflows/.github/workflows/deploy.yml@main
-    if: ${{ inputs.DEPLOY_TARGET == 'production:server:runner' }}
+    if: ${{ inputs.DEPLOY_TARGET == 'server/runner' }}
     with:
       DEPLOYER_IMAGE: ghcr.io/${{ github.repository }}/devops/ansible:${{ inputs.IMAGE_VERSION }}
       PLAYBOOK: playbooks/${{ inputs.ENVIRONMENT }}/notification-hub/deploy.yaml
@@ -38,9 +34,9 @@ jobs:
       CI_BOT_SSH_PRIVATE_KEY: ${{ secrets.CI_BOT_SSH_PRIVATE_KEY }}
       ANSIBLE_VAULT_PASSWORD: ${{ secrets.VAULT_PASSWORD }}
     
-  production-notification-hub-api:
+  server-api:
     uses: 7egend/workflows/.github/workflows/deploy.yml@main
-    if: ${{ inputs.DEPLOY_TARGET == 'production:server:api' }}
+    if: ${{ inputs.DEPLOY_TARGET == 'server/api' }}
     with:
       DEPLOYER_IMAGE: ghcr.io/${{ github.repository }}/devops/ansible:${{ inputs.IMAGE_VERSION }}
       PLAYBOOK: playbooks/${{ inputs.ENVIRONMENT }}/notification-hub/deploy.yaml
