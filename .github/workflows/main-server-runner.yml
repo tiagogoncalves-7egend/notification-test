@@ -31,15 +31,15 @@ jobs:
       - run: echo ${{ needs.prepare.outputs.version }}
   
   
-  build-image:
-    uses: 7egend/workflows/.github/workflows/build.yml@main
-    permissions: write-all
-    secrets: inherit
-    with:
-      DOCKERFILE_PATH: server/runner/Dockerfile
-      CONTEXT_PATH: server/runner
-      CONTAINER_RELEASE_VERSION: ${{ needs.prepare.outputs.version }}
-    needs: prepare
+#  build-image:
+#    uses: 7egend/workflows/.github/workflows/build.yml@main
+#    permissions: write-all
+#    secrets: inherit
+#    with:
+#      DOCKERFILE_PATH: server/runner/Dockerfile
+#      CONTEXT_PATH: server/runner
+#      CONTAINER_RELEASE_VERSION: ${{ needs.prepare.outputs.version }}
+#    needs: prepare
 
 
   deploy-production-notification-hub-runner:
