@@ -16,14 +16,18 @@ jobs:
     outputs:
       version: ${{ steps.set_version.outputs.version }}
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        
       - name: Set Version Variable
         id: set_version
         run: |
           if [[ ${{ github.ref }} == 'refs/heads/main' ]]; then
-            echo "version=latest" >> "$GITHUB_OUTPUT"
+            echo "version=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
           elif [[ ${{ github.ref }} == refs/tags/* ]]; then
             echo "version=${{ github.ref }}" >> "$GITHUB_OUTPUT"
           fi
+          
       - run: echo ${{ needs.prepare.outputs.version }}
   
   
@@ -37,13 +41,17 @@ jobs:
       CONTAINER_RELEASE_VERSION: ${{ needs.prepare.outputs.version }}
     needs: prepare
 
+
   deploy-production-notification-hub-runner:
     uses: 7egend/workflows/.github/workflows/deploy.yml@main
     with:
-      DEPLOYER_IMAGE: ghcr.io/${{ github.repository }}/devops/ansible:${{ needs.prepare.outputs.version }}
+      DEPLOYER_IMAGE: ghcr.io/${{ github.repository }}/devops/ansible:latest
       PLAYBOOK: playbooks/production/notification-hub/deploy.yaml
       KNOWN_HOSTS_FILE: ${{ vars.KNOWN_HOSTS_FILE }}
       ENVIRONMENT: production
+      MICROSERVICE_DEV_VARIABLE_PATH: devops/ansible/group_vars/production/docker.yaml
+      MICROSERVICE_DEV_VARIABLE: notification_hub_runner_docker_image
+      MICROSERVICE_DEV_VERSION: ${{ needs.prepare.outputs.version }}
     secrets:
       CI_BOT_SSH_PRIVATE_KEY: ${{ secrets.CI_BOT_SSH_PRIVATE_KEY }}
       ANSIBLE_VAULT_PASSWORD: ${{ secrets.VAULT_PASSWORD }}
