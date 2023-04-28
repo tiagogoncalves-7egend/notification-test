@@ -41,7 +41,7 @@ jobs:
     uses: 7egend/workflows/.github/workflows/deploy.yml@main
     if: ${{ inputs.DEPLOY_TARGET == 'server/api' }}
     with:
-      DEPLOYER_IMAGE: ghcr.io/${{ github.repository }}/devops/ansible:${{ inputs.IMAGE_VERSION }}
+      DEPLOYER_IMAGE: ghcr.io/${{ github.repository }}/devops/ansible:latest
       PLAYBOOK: playbooks/${{ inputs.ENVIRONMENT }}/notification-hub/deploy.yaml
       ENVIRONMENT: ${{ inputs.ENVIRONMENT }}
       MICROSERVICE_VARIABLE: notification_hub_api_docker_image
