@@ -49,7 +49,7 @@ jobs:
       PLAYBOOK: playbooks/production/notification-hub/deploy.yaml
       KNOWN_HOSTS_FILE: ${{ vars.KNOWN_HOSTS_FILE }}
       ENVIRONMENT: production
-      MICROSERVICE_DEV_VARIABLE_PATH: group_vars/production/docker.yaml
+      MICROSERVICE_DEV_VARIABLE_PATH: devops/ansible/group_vars/production/docker.yaml
       MICROSERVICE_DEV_VARIABLE: notification_hub_runner_docker_image
       MICROSERVICE_DEV_VERSION: ${{ needs.prepare.outputs.version }}
     secrets:
