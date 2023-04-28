@@ -31,7 +31,7 @@ jobs:
       CONTAINER_RELEASE_VERSION: ${{ github.sha }}
 
   server-runner:
-    if: ${{ || inputs.PROJECT == 'server/runner' }}
+    if: ${{ inputs.PROJECT == 'server/runner' }}
     uses: 7egend/workflows/.github/workflows/build.yml@main
     permissions: write-all
     secrets: inherit
