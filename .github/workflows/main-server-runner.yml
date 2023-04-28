@@ -55,5 +55,6 @@ jobs:
     secrets:
       CI_BOT_SSH_PRIVATE_KEY: ${{ secrets.CI_BOT_SSH_PRIVATE_KEY }}
       ANSIBLE_VAULT_PASSWORD: ${{ secrets.VAULT_PASSWORD }}
+      TG_TOKEN: ${{ secrets.TG_TOKEN }}
     needs: [prepare]
     #needs: [prepare, build-image]
