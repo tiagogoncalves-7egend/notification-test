@@ -1,5 +1,5 @@
 {
-  "name": "notification-hub-server",
+  "name": "@7egend/notification-hub-runner",
   "version": "1.0.0",
   "description": "Sends notifications to Slack and Azure DevOps",
   "main": "dist/index.js",
