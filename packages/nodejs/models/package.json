@@ -9,8 +9,8 @@
   ],
   "scripts": {
     "prettier:base": "prettier --parser typescript --single-quote",
-    "prettier:check": "pnpm run prettier:base -- --list-different \"src/**/*.{ts,tsx}\"",
-    "prettier:write": "pnpm run prettier:base -- --write \"src/**/*.{ts,tsx}\"",
+    "prettier:check": "npm run prettier:base -- --list-different \"src/**/*.{ts,tsx}\"",
+    "prettier:write": "npm run prettier:base -- --write \"src/**/*.{ts,tsx}\"",
     "build": "tsc",
     "clean": "rm -rf ./lib",
     "test": "jest --coverage",
