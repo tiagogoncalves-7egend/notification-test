@@ -5,8 +5,8 @@
   "main": "dist/index.js",
   "scripts": {
     "prettier:base": "prettier --parser typescript --single-quote",
-    "prettier:check": "pnpm run prettier:base -- --list-different \"src/**/*.{ts,tsx,json}\"",
-    "prettier:write": "pnpm run prettier:base -- --write \"src/**/*.{ts,tsx,json}\"",
+    "prettier:check": "npm run prettier:base -- --list-different \"src/**/*.{ts,tsx,json}\"",
+    "prettier:write": "npm run prettier:base -- --write \"src/**/*.{ts,tsx,json}\"",
     "build": "tsc",
     "clean": "rm -rf ./dist",
     "start": "node -r dotenv/config ./dist/index.js dotenv_config_path=.app.env",

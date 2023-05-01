@@ -4,26 +4,26 @@ import themes from './themes'
 import { formatToTimeZone } from 'date-fns-timezone'
 import { CommentCreate } from 'azure-devops-node-api/interfaces/WorkItemTrackingInterfaces'
 import {
-    NewDesignFile,
-    Release,
-    SuccessfulDeployment,
+  NewDesignFile,
+  Release,
+  SuccessfulDeployment,
 } from '@7egend/notification-hub-models/lib/notifications'
 
 export const compose = (notification: SuccessfulDeployment | NewDesignFile) =>
-    notification.type === 'SuccessfulDeployment'
-        ? composeSuccessfulDeployment(notification)
-        : composeNewDesignFile(notification)
+  notification.type === 'SuccessfulDeployment'
+    ? composeSuccessfulDeployment(notification)
+    : composeNewDesignFile(notification)
 
 const composeSuccessfulDeployment = ({
-    createdAt,
-    environment,
-    author,
-    release,
+  createdAt,
+  environment,
+  author,
+  release,
 }: SuccessfulDeployment): CommentCreate => ({
-    text: `
+  text: `
             <h1><b>🚀 ${themes[environment].emoji} Deployed a new version: ${
-        release.tag
-    }</b></h1>
+    release.tag
+  }</b></h1>
             <div><b>Author:</b></div>
             <div>${author}<br><br></div>
             <div><b>Environment:</b></div>
@@ -38,12 +38,12 @@ const composeSuccessfulDeployment = ({
 })
 
 const composeNewDesignFile = ({
-    createdAt,
-    author,
-    release,
-    differences,
+  createdAt,
+  author,
+  release,
+  differences,
 }: NewDesignFile): CommentCreate => ({
-    text: `
+  text: `
     <h1><b>🎨 🚀 Released a new design version: ${release.tag}</b></h1>
     <div><b>Author:</b></div>
     <div>${author}<br><br></div>
@@ -62,12 +62,12 @@ const composeNewDesignFile = ({
 })
 
 const changelog = ({ changelog }: Release) =>
-    pipe(
-        changelog,
-        O.fromNullable,
-        O.map(changelog => `<i>"${changelog}"</i>`),
-        O.getOrElse(() => 'No description provided.')
-    )
+  pipe(
+    changelog,
+    O.fromNullable,
+    O.map(changelog => `<i>"${changelog}"</i>`),
+    O.getOrElse(() => 'No description provided.')
+  )
 
 const stringFromDate = (date: Date, timeZone: string = 'Europe/Lisbon') =>
-    formatToTimeZone(date, `D MMMM YYYY, H:mm ([${timeZone}])`, { timeZone })
+  formatToTimeZone(date, `D MMMM YYYY, H:mm ([${timeZone}])`, { timeZone })
