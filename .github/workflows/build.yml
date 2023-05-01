@@ -21,29 +21,32 @@ jobs:
         run: echo "${{ github.event.changes }}"
   
   devops-ansible:
-    if: ${{ contains(github.event.changes, 'devops/ansible') || inputs.PROJECT == 'devops/ansible' }}
+    if: ${{ inputs.PROJECT == 'devops/ansible' }}
     uses: 7egend/workflows/.github/workflows/build.yml@main
     permissions: write-all
     secrets: inherit
     with:
       DOCKERFILE_PATH: devops/ansible/Dockerfile
       CONTEXT_PATH: devops/ansible
+      CONTAINER_RELEASE_VERSION: ${{ github.sha }}
 
   server-runner:
-    if: ${{ contains(github.event.changes, 'server/runner') || inputs.PROJECT == 'server/runner' }}
+    if: ${{ inputs.PROJECT == 'server/runner' }}
     uses: 7egend/workflows/.github/workflows/build.yml@main
     permissions: write-all
     secrets: inherit
     with:
       DOCKERFILE_PATH: server/runner/Dockerfile
       CONTEXT_PATH: server/runner
+      CONTAINER_RELEASE_VERSION: ${{ github.sha }}
       
   server-api:
-    if: ${{ contains(github.event.changes, 'server/api') || inputs.PROJECT == 'server/api' }}
+    if: ${{ inputs.PROJECT == 'server/api' }}
     uses: 7egend/workflows/.github/workflows/build.yml@main
     permissions: write-all
     secrets: inherit
     with:
       DOCKERFILE_PATH: server/api/Dockerfile
       CONTEXT_PATH: server/api
+      CONTAINER_RELEASE_VERSION: ${{ github.sha }}
     
