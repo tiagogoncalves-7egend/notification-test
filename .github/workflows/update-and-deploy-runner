@@ -1,0 +1,26 @@
+name: Deploy
+ 
+on:
+  workflow_dispatch:
+    inputs:
+      ENVIRONMENT:
+        required: true
+        type: choice
+        description: Environment target
+        options: 
+        - production
+        
+jobs:
+  update-and-deploy:
+    uses: 7egend/workflows/.github/workflows/update-and-deploy.yml@main
+    with:
+      DEPLOYER_IMAGE: ghcr.io/${{ github.repository }}/devops/ansible:latest
+      PLAYBOOK: playbooks/${{ inputs.ENVIRONMENT }}/notification-hub/deploy.yaml
+      ENVIRONMENT: ${{ inputs.ENVIRONMENT }}
+      MICROSERVICE_DEV_VARIABLE_PATH: devops/ansible/group_vars/production/docker.yaml
+      MICROSERVICE_DEV_VARIABLE: notification_hub_runner_docker_image
+      MICROSERVICE_DEV_VERSION: 2.2.0
+      KNOWN_HOSTS_FILE: ${{ vars.KNOWN_HOSTS_FILE }}
+    secrets:
+      CI_BOT_SSH_PRIVATE_KEY: ${{ secrets.CI_BOT_SSH_PRIVATE_KEY }}
+      ANSIBLE_VAULT_PASSWORD: ${{ secrets.VAULT_PASSWORD }}
