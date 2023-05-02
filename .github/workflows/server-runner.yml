@@ -43,7 +43,7 @@ jobs:
 
 
   build-other-images:
-    uses: 7egend/workflows/.github/workflows/create-tag-image.yml.yml@main
+    uses: 7egend/workflows/.github/workflows/create-tag-image.yml@main
     permissions: write-all
     secrets: inherit
     strategy:
