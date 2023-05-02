@@ -1,0 +1,73 @@
+name: Build and deploy server/runner docker image
+
+on:
+  workflow_dispatch:
+  push:
+    branches:    
+      - main
+    tags:
+      - '*.*.*'
+    paths:
+      - 'server/runner/**'
+
+jobs:
+  prepare:
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.set_version.outputs.version }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        
+      - name: Set Version Variable
+        id: set_version
+        run: |
+          if [[ ${{ github.ref }} == 'refs/heads/main' ]]; then
+            echo "version=${GITHUB_SHA:0:7}" >> $GITHUB_OUTPUT
+          elif [[ ${{ github.ref }} == refs/tags/* ]]; then
+            echo "version=${{ github.ref }}" >> "$GITHUB_OUTPUT"
+          fi
+          
+      - run: echo ${{ needs.prepare.outputs.version }}
+  
+  
+  build-image:
+    uses: 7egend/workflows/.github/workflows/build-image.yml@main
+    permissions: write-all
+    secrets: inherit
+    with:
+      DOCKERFILE_PATH: server/runner/Dockerfile
+      CONTEXT_PATH: server/runner
+      CONTAINER_RELEASE_VERSION: ${{ needs.prepare.outputs.version }}
+    needs: prepare
+
+
+  build-other-images:
+    uses: 7egend/workflows/.github/workflows/create-tag-image.yml.yml@main
+    permissions: write-all
+    secrets: inherit
+    strategy:
+      matrix:
+        contexts: ${{ vars.MICROSERVICES_CONTEXTS }}
+    with:
+      DOCKERFILE_PATH: ${{ matrix.contexts }}/Dockerfile
+      CONTEXT_PATH: ${{ matrix.contexts }}
+      CONTAINER_RELEASE_VERSION: ${{ needs.prepare.outputs.version }}
+    needs: [prepare, build-image]
+
+  # deploy-production-notification-hub-runner:
+  #   uses: 7egend/workflows/.github/workflows/deploy.yml@main
+  #   with:
+  #     DEPLOYER_IMAGE: ghcr.io/${{ github.repository }}/devops/ansible:latest
+  #     PLAYBOOK: playbooks/production/notification-hub/deploy.yaml
+  #     KNOWN_HOSTS_FILE: ${{ vars.KNOWN_HOSTS_FILE }}
+  #     ENVIRONMENT: production
+  #     MICROSERVICE_DEV_VARIABLE_PATH: devops/ansible/group_vars/production/docker.yaml
+  #     MICROSERVICE_DEV_VARIABLE: notification_hub_runner_docker_image
+  #     MICROSERVICE_DEV_VERSION: ${{ needs.prepare.outputs.version }}
+  #   secrets:
+  #     CI_BOT_SSH_PRIVATE_KEY: ${{ secrets.CI_BOT_SSH_PRIVATE_KEY }}
+  #     ANSIBLE_VAULT_PASSWORD: ${{ secrets.VAULT_PASSWORD }}
+  #     TG_TOKEN: ${{ secrets.TG_TOKEN }}
+  #   needs: [prepare]
+    #needs: [prepare, build-image]
