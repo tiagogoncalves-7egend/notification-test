@@ -3,6 +3,10 @@ name: Update and Deploy
 on:
   workflow_dispatch:
     inputs:
+      IMAGE_VERSION:
+        required: true
+        type: string
+        default: latest
       ENVIRONMENT:
         required: true
         type: choice
@@ -19,7 +23,7 @@ jobs:
       ENVIRONMENT: ${{ inputs.ENVIRONMENT }}
       MICROSERVICE_DEV_VARIABLE_PATH: devops/ansible/group_vars/production/docker.yaml
       MICROSERVICE_DEV_VARIABLE: notification_hub_runner_docker_image
-      MICROSERVICE_DEV_VERSION: 2.2.0
+      MICROSERVICE_DEV_VERSION: ${{ inputs.IMAGE_VERSION }}
       KNOWN_HOSTS_FILE: ${{ vars.KNOWN_HOSTS_FILE }}
     secrets:
       CI_BOT_SSH_PRIVATE_KEY: ${{ secrets.CI_BOT_SSH_PRIVATE_KEY }}
