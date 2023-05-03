@@ -55,7 +55,7 @@ RUN echo $BUILD_SOURCE_REF_NAME >> /usr/share/git_tag
 
 USER node
 
-ARG WORKDIR=/home/node/app/
+ARG WORKDIR=/home/node/app
 WORKDIR ${WORKDIR}
 
 # General configs
