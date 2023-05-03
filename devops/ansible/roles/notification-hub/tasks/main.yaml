@@ -29,14 +29,25 @@
     password: "{{ gitlab_password }}"
 
 # -------------------------------------
-# Set 
+# Set global docker tag.
 # -------------------------------------
-- name: Set folder name of the current build
-  set_fact:
-    general_tag: ""
-- name: Get commit hash or tag
+- name: Get git version or commit hash
   shell: "cat /etc/git_tag"
-  register: git_describe
+  register: git_tag
+
+- name: Set current build version
+  set_fact:
+    general_tag: "{{ git_tag.stdout }}"
+
+- name: Get git version or commit hash
+  shell: "git describe --tags || git rev-parse --short HEAD"
+  register: git_tag
+  when: general_tag.stdout is not defined or general_tag.stdout == ""
+
+- name: Set current build version
+  set_fact:
+    general_tag: "{{ git_tag.stdout }}"
+  when: general_tag.stdout is not defined or general_tag.stdout == ""
 
 # -------------------------------------
 # Restart services and check if they
