@@ -29,6 +29,16 @@
     password: "{{ gitlab_password }}"
 
 # -------------------------------------
+# Set 
+# -------------------------------------
+- name: Set folder name of the current build
+  set_fact:
+    general_tag: ""
+- name: Get commit hash or tag
+  shell: "cat /etc/git_tag"
+  register: git_describe
+
+# -------------------------------------
 # Restart services and check if they
 # are running.
 # -------------------------------------

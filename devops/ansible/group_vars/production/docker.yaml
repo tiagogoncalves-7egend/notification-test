@@ -9,8 +9,10 @@ gateway_traefik_https_port: 443
 # -------------------------------------
 # Notification Hub
 # -------------------------------------
-notification_hub_runner_docker_image: registry.gitlab.com/7egend/projects/home/microservices/notification-hub/server/runner:2.2.0
-notification_hub_api_docker_image: registry.gitlab.com/7egend/projects/home/microservices/notification-hub/server/api:0.2.6
+notification_hub_runner_docker_image: registry.gitlab.com/7egend/projects/home/microservices/notification-hub/server/runner
+notification_hub_runner_docker_image_tag: {{ general_tag }}
+notification_hub_api_docker_image: registry.gitlab.com/7egend/projects/home/microservices/notification-hub/server/api
+notification_hub_api_docker_image_tag: {{ general_tag }}
 
 # -------------------------------------
 # AMQP

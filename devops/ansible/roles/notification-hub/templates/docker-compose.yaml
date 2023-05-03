@@ -2,7 +2,7 @@ version: '3.6'
 
 services:
   runner:
-    image: {{ notification_hub_runner_docker_image }}
+    image: {{ notification_hub_runner_docker_image }}:{{ notification_hub_api_docker_image_tag}}
     restart: always
     environment:
       AMQP_URL: "{{ amqp_connection_string }}"
@@ -16,7 +16,7 @@ services:
       - notification-hub
 
   api:
-    image: {{ notification_hub_api_docker_image }}
+    image: {{ notification_hub_api_docker_image }}:{{ notification_hub_api_docker_image_tag}}}
     restart: always
     environment:
       ACCESS_TOKENS: "{{ notification_hub_api_access_tokens }}"
