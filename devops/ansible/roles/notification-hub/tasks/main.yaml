@@ -31,23 +31,15 @@
 # -------------------------------------
 # Set global docker tag.
 # -------------------------------------
-- name: Get git version or commit hash
-  shell: "cat /usr/share/git_tag"
-  register: git_tag
+# - name: Get git version or commit hash
+#   shell: "git describe --tags || git rev-parse --short HEAD"
+#   register: git_tag
+#   when: general_tag.stdout is not defined or general_tag.stdout == ""
 
-- name: Set current build version
-  set_fact:
-    general_tag: "{{ git_tag.stdout }}"
-
-- name: Get git version or commit hash
-  shell: "git describe --tags || git rev-parse --short HEAD"
-  register: git_tag
-  when: general_tag.stdout is not defined or general_tag.stdout == ""
-
-- name: Set current build version
-  set_fact:
-    general_tag: "{{ git_tag.stdout }}"
-  when: general_tag.stdout is not defined or general_tag.stdout == ""
+# - name: Set current build version
+#   set_fact:
+#     general_tag: "{{ git_tag.stdout }}"
+#   when: general_tag.stdout is not defined or general_tag.stdout == ""
 
 - name: Cat general_tag
   debug: var=general_tag

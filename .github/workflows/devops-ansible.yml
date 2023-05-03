@@ -1,4 +1,4 @@
-name: Build and deploy devops/ansible docker image
+name: Build devops/ansible docker image
 
 on:
   workflow_dispatch:
@@ -62,7 +62,7 @@ jobs:
     secrets: inherit
     strategy:
       matrix:
-        contexts: ${{ vars.MICROSERVICES_CONTEXTS }}
+        contexts: [${{ vars.MICROSERVICES_CONTEXTS }}]
     with:
       DOCKERFILE_PATH: ${{ matrix.contexts }}/Dockerfile
       CONTEXT_PATH: ${{ matrix.contexts }}

@@ -76,6 +76,7 @@ jobs:
       PLAYBOOK: playbooks/production/notification-hub/deploy.yaml
       KNOWN_HOSTS_FILE: ${{ vars.KNOWN_HOSTS_FILE }}
       ENVIRONMENT: production
+      CONTAINER_RELEASE_VERSION: ${{ needs.prepare.outputs.version }}
     secrets:
       CI_BOT_SSH_PRIVATE_KEY: ${{ secrets.CI_BOT_SSH_PRIVATE_KEY }}
       ANSIBLE_VAULT_PASSWORD: ${{ secrets.VAULT_PASSWORD }}
