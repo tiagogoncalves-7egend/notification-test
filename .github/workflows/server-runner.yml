@@ -41,7 +41,7 @@ jobs:
           echo "ola mundo2"
           echo ${GITHUB_SHA:0:7}
           echo "ola mundo3"
-          echo ${{ needs.prepare.outputs.version }}
+          echo ${{ steps.prepare.outputs.version }}
   
   
   build-image:
