@@ -1,0 +1,70 @@
+name: Build and deploy devops/ansible docker image
+
+on:
+  workflow_dispatch:
+  push:
+    branches:    
+      - main
+    tags:
+      - '*.*.*'
+    paths:
+      - 'devops/ansible/**'
+
+jobs:
+  prepare:
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.set_version.outputs.version }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        
+      - name: Set Version Variable
+        id: set_version
+        run: |
+          if [[ ${{ github.ref }} == 'refs/heads/main' ]]; then
+            echo "version=${GITHUB_SHA:0:7}" >> $GITHUB_OUTPUT
+            echo ${GITHUB_SHA:0:7}
+          elif [[ ${{ github.ref }} == refs/tags/* ]]; then
+            echo "version=${{ github.ref }}" >> "$GITHUB_OUTPUT"
+            echo ${{ github.ref }}
+          fi
+          
+      - run: |
+          echo ${{ github.sha }}
+          NEW_VAR=${{ github.sha }}
+          echo "ola mundo0"
+          echo $NEW_VAR
+          echo ${NEW_VAR:0:7}
+          echo "ola mundo1"
+          echo ${GITHUB_SHA}
+          echo "ola mundo2"
+          echo ${GITHUB_SHA:0:7}
+          echo "ola mundo3"
+          echo ${{ steps.set_version.outputs.version }}
+  
+  
+  build-image:
+    uses: 7egend/workflows/.github/workflows/build-image.yml@main
+    permissions: write-all
+    secrets: inherit
+    with:
+      DOCKER_IMAGE_NAME: devops/ansible
+      DOCKERFILE_PATH: devops/ansible/Dockerfile
+      CONTEXT_PATH: devops/ansible
+      CONTAINER_RELEASE_VERSION: ${{ needs.prepare.outputs.version }}
+    needs: prepare
+
+
+  build-other-images:
+    uses: 7egend/workflows/.github/workflows/create-tag-image.yml@main
+    permissions: write-all
+    secrets: inherit
+    strategy:
+      matrix:
+        contexts: ${{ vars.MICROSERVICES_CONTEXTS }}
+    with:
+      DOCKERFILE_PATH: ${{ matrix.contexts }}/Dockerfile
+      CONTEXT_PATH: ${{ matrix.contexts }}
+      CONTAINER_RELEASE_VERSION: ${{ needs.prepare.outputs.version }}
+    needs: [prepare, build-image]

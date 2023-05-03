@@ -31,3 +31,9 @@ COPY ansible.cfg .
 COPY hosts.yaml .
 
 RUN chmod u=rx,go= ansible.cfg
+
+RUN pip3 install PyMySQL
+RUN apk add mysql-client
+
+ARG BUILD_SOURCE_REF_NAME
+RUN echo $BUILD_SOURCE_REF_NAME >> /etc/git_tag
