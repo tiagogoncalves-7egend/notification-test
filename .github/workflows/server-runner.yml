@@ -62,7 +62,7 @@ jobs:
     secrets: inherit
     strategy:
       matrix:
-        contexts: ${{ vars.MICROSERVICES_CONTEXTS }}
+        contexts: [devops/ansible, server/runner, server/api]
     with:
       DOCKERFILE_PATH: ${{ matrix.contexts }}/Dockerfile
       DOCKER_IMAGE_NAME: ${{ matrix.contexts }}
