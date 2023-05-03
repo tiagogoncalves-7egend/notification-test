@@ -62,17 +62,17 @@ COPY --from=prod-builder --chown=node:node ${WORKDIR}/package.json .
 COPY --from=prod-builder --chown=node:node ${WORKDIR}/nx.json .
 COPY --from=prod-builder --chown=node:node ${WORKDIR}/pnpm-lock.yaml .
 COPY --from=prod-builder --chown=node:node ${WORKDIR}/pnpm-workspace.yaml .
-COPY --from=prod-builder --chown=node:node ${WORKDIR}/node_modules .
+COPY --from=prod-builder --chown=node:node ${WORKDIR}/node_modules ./node_modules
 
 # Other packages
 COPY packages/nodejs/models packages/nodejs/models
+
+WORKDIR ${WORKDIR}/server/api
 
 # Service api source code
 COPY --from=prod-builder --chown=node:node ${WORKDIR}/server/api/dist ./dist
 COPY --from=prod-builder --chown=node:node ${WORKDIR}/server/api/node_modules ./node_modules
 COPY --from=prod-builder --chown=node:node ${WORKDIR}/server/api/package*.json .
-
-WORKDIR ${WORKDIR}/server/api
 
 CMD ["pnpm", "start"]
 

@@ -62,16 +62,16 @@ COPY --from=prod-builder --chown=node:node ${WORKDIR}/package.json .
 COPY --from=prod-builder --chown=node:node ${WORKDIR}/nx.json .
 COPY --from=prod-builder --chown=node:node ${WORKDIR}/pnpm-lock.yaml .
 COPY --from=prod-builder --chown=node:node ${WORKDIR}/pnpm-workspace.yaml .
-COPY --from=prod-builder --chown=node:node ${WORKDIR}/node_modules .
+COPY --from=prod-builder --chown=node:node ${WORKDIR}/node_modules ./node_modules
 
 # Other packages
 COPY packages/nodejs/models packages/nodejs/models
 
-# Service runner source code
-COPY --from=prod-builder --chown=node:node ${WORKDIR}/server/runner/dist ${WORKDIR}/server/runner
-COPY --from=prod-builder --chown=node:node ${WORKDIR}/server/runner/node_modules ${WORKDIR}/server/runner
-COPY --from=prod-builder --chown=node:node ${WORKDIR}/server/runner/package*.json ${WORKDIR}/server/runner
-
 WORKDIR ${WORKDIR}/server/runner
+
+# Service runner source code
+COPY --from=prod-builder --chown=node:node ${WORKDIR}/server/runner/dist ./dist
+COPY --from=prod-builder --chown=node:node ${WORKDIR}/server/runner/node_modules ./node_modules
+COPY --from=prod-builder --chown=node:node ${WORKDIR}/server/runner/package*.json .
 
 CMD ["pnpm", "start"]
