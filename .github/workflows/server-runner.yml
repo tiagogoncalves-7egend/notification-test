@@ -28,7 +28,15 @@ jobs:
             echo "version=${{ github.ref }}" >> "$GITHUB_OUTPUT"
           fi
           
-      - run: echo ${{ needs.prepare.outputs.version }}
+      - run: |
+          echo ${{ github.sha }}
+          NEW_VAR=${{ github.sha:0:7 }}
+          echo ${{ github.sha }}
+          echo $NEW_VAR
+          echo "ola mundo"
+          echo ${GITHUB_SHA}
+          echo ${GITHUB_SHA:0:7}
+          echo ${{ needs.prepare.outputs.version }}
   
   
   build-image:
