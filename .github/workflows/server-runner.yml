@@ -30,9 +30,9 @@ jobs:
           
       - run: |
           echo ${{ github.sha }}
-          NEW_VAR=${{ github.sha:0:7 }}
-          echo ${{ github.sha }}
+          NEW_VAR=${{ github.sha }}
           echo $NEW_VAR
+          echo ${NEW_VAR:0:7}
           echo "ola mundo"
           echo ${GITHUB_SHA}
           echo ${GITHUB_SHA:0:7}
