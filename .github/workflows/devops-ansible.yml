@@ -65,6 +65,6 @@ jobs:
   #       contexts: [${{ vars.MICROSERVICES_CONTEXTS }}]
   #   with:
   #     DOCKERFILE_PATH: ${{ matrix.contexts }}/Dockerfile
-  #     CONTEXT_PATH: ${{ matrix.contexts }}
+  #     DOCKER_IMAGE_NAME: ${{ matrix.contexts }}
   #     CONTAINER_RELEASE_VERSION: ${{ needs.prepare.outputs.version }}
   #   needs: [prepare, build-image]
