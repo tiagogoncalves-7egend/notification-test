@@ -65,7 +65,9 @@ COPY --from=prod-builder --chown=node:node ${WORKDIR}/pnpm-workspace.yaml .
 COPY --from=prod-builder --chown=node:node ${WORKDIR}/node_modules ./node_modules
 
 # Other packages
-COPY packages/nodejs/models packages/nodejs/models
+COPY --from=prod-builder --chown=node:node ${WORKDIR}/packages/nodejs/models/package.json packages/nodejs/models/package.json
+COPY --from=prod-builder --chown=node:node ${WORKDIR}/packages/nodejs/models/node_modules ./packages/nodejs/models/node_modules
+COPY --from=prod-builder --chown=node:node ${WORKDIR}/packages/nodejs/models/lib ./packages/nodejs/models/lib
 
 WORKDIR ${WORKDIR}/server/api
 
