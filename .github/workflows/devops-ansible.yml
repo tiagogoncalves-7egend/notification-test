@@ -56,15 +56,15 @@ jobs:
     needs: prepare
 
 
-  build-other-images:
-    uses: 7egend/workflows/.github/workflows/create-tag-image.yml@main
-    permissions: write-all
-    secrets: inherit
-    strategy:
-      matrix:
-        contexts: [${{ vars.MICROSERVICES_CONTEXTS }}]
-    with:
-      DOCKERFILE_PATH: ${{ matrix.contexts }}/Dockerfile
-      CONTEXT_PATH: ${{ matrix.contexts }}
-      CONTAINER_RELEASE_VERSION: ${{ needs.prepare.outputs.version }}
-    needs: [prepare, build-image]
+  # build-other-images:
+  #   uses: 7egend/workflows/.github/workflows/create-tag-image.yml@main
+  #   permissions: write-all
+  #   secrets: inherit
+  #   strategy:
+  #     matrix:
+  #       contexts: [${{ vars.MICROSERVICES_CONTEXTS }}]
+  #   with:
+  #     DOCKERFILE_PATH: ${{ matrix.contexts }}/Dockerfile
+  #     CONTEXT_PATH: ${{ matrix.contexts }}
+  #     CONTAINER_RELEASE_VERSION: ${{ needs.prepare.outputs.version }}
+  #   needs: [prepare, build-image]
