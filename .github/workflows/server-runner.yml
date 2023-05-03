@@ -24,8 +24,10 @@ jobs:
         run: |
           if [[ ${{ github.ref }} == 'refs/heads/main' ]]; then
             echo "version=${GITHUB_SHA:0:7}" >> $GITHUB_OUTPUT
+            echo ${GITHUB_SHA:0:7}
           elif [[ ${{ github.ref }} == refs/tags/* ]]; then
             echo "version=${{ github.ref }}" >> "$GITHUB_OUTPUT"
+            echo ${{ github.ref }}
           fi
           
       - run: |
