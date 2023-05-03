@@ -16,7 +16,7 @@ services:
       - notification-hub
 
   api:
-    image: {{ notification_hub_api_docker_image }}:{{ notification_hub_api_docker_image_tag}}}
+    image: {{ notification_hub_api_docker_image }}:{{ notification_hub_api_docker_image_tag}}
     restart: always
     environment:
       ACCESS_TOKENS: "{{ notification_hub_api_access_tokens }}"
