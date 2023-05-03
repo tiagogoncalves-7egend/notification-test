@@ -48,6 +48,10 @@ RUN --mount=type=cache,id=yarn,sharing=locked,target=/usr/local/share/.cache/yar
 # ########################################################################################################################
 
 FROM node:${NODEJS_VERSION}-alpine${ALPINE_VERSION}
+
+USER root
+RUN npm i -g pnpm
+
 USER node
 
 ARG WORKDIR=/home/node/app/

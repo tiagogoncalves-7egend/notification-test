@@ -50,8 +50,7 @@ RUN --mount=type=cache,id=yarn,sharing=locked,target=/usr/local/share/.cache/yar
 FROM node:${NODEJS_VERSION}-alpine${ALPINE_VERSION}
 
 USER root
-ARG BUILD_SOURCE_REF_NAME
-RUN echo $BUILD_SOURCE_REF_NAME >> /usr/share/git_tag
+RUN npm i -g pnpm
 
 USER node
 
