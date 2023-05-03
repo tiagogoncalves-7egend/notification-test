@@ -32,7 +32,7 @@
 # Set global docker tag.
 # -------------------------------------
 - name: Get git version or commit hash
-  shell: "cat /etc/git_tag"
+  shell: "cat /usr/share/git_tag"
   register: git_tag
 
 - name: Set current build version

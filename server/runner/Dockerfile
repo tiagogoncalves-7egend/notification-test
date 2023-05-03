@@ -48,13 +48,15 @@ RUN --mount=type=cache,id=yarn,sharing=locked,target=/usr/local/share/.cache/yar
 # ########################################################################################################################
 
 FROM node:${NODEJS_VERSION}-alpine${ALPINE_VERSION}
+
+USER root
+ARG BUILD_SOURCE_REF_NAME
+RUN echo $BUILD_SOURCE_REF_NAME >> /usr/share/git_tag
+
 USER node
 
 ARG WORKDIR=/home/node/app/
 WORKDIR ${WORKDIR}
-
-ARG BUILD_SOURCE_REF_NAME
-RUN echo $BUILD_SOURCE_REF_NAME >> /etc/git_tag
 
 # General configs
 COPY --from=prod-builder --chown=node:node ${WORKDIR}/package.json .
