@@ -30,19 +30,6 @@ jobs:
             echo ${{ github.ref }}
           fi
           
-      - run: |
-          echo ${{ github.sha }}
-          NEW_VAR=${{ github.sha }}
-          echo "ola mundo0"
-          echo $NEW_VAR
-          echo ${NEW_VAR:0:7}
-          echo "ola mundo1"
-          echo ${GITHUB_SHA}
-          echo "ola mundo2"
-          echo ${GITHUB_SHA:0:7}
-          echo "ola mundo3"
-          echo ${{ steps.set_version.outputs.version }}
-  
   
   build-image:
     uses: 7egend/workflows/.github/workflows/build-image.yml@main
@@ -70,7 +57,7 @@ jobs:
     needs: [prepare, build-image]
 
 
-  deploy-production-notification-hub-runner:
+  deploy-production-notification-hub-api:
     uses: 7egend/workflows/.github/workflows/deploy.yml@main
     with:
       DEPLOYER_IMAGE: ghcr.io/${{ github.repository }}/devops/ansible:latest
@@ -81,4 +68,4 @@ jobs:
     secrets:
       CI_BOT_SSH_PRIVATE_KEY: ${{ secrets.CI_BOT_SSH_PRIVATE_KEY }}
       ANSIBLE_VAULT_PASSWORD: ${{ secrets.VAULT_PASSWORD }}
-    needs: [prepare, build-image]
+    needs: [prepare, build-other-images]

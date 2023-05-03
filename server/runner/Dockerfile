@@ -73,4 +73,6 @@ COPY --from=prod-builder --chown=node:node ${WORKDIR}/server/runner/dist ${WORKD
 COPY --from=prod-builder --chown=node:node ${WORKDIR}/server/runner/node_modules ${WORKDIR}/server/runner
 COPY --from=prod-builder --chown=node:node ${WORKDIR}/server/runner/package*.json ${WORKDIR}/server/runner
 
-CMD ["yarn", "run", "start"]
+WORKDIR ${WORKDIR}/server/runner
+
+CMD ["pnpm", "start"]
