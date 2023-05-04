@@ -14,13 +14,12 @@ on:
         required: false
         type: string
         description: Repository git version
-        default: ${{ github.sha }}
       ENVIRONMENT:
         required: true
         type: choice
         description: Environment target
         options: 
-        - production
+          - production
         
 jobs:
   server-runner:
