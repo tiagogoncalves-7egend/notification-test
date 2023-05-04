@@ -4,7 +4,26 @@
 
 # Notification Hub
 
-This repository contains all models that should be honored by all _Notification Hub_ components. Specifically, it defines the target platforms that can receive notifications, as well as the notification's content.
+Use the notification hub to send notifications after a known event has happened. These notifications can be published in one or more target platforms.
+
+This repository also contains the _TypeScript_ types that should be honored by all _Notification Hub_ components. Specifically, it defines the target platforms that can receive notifications, as well as the notification's content.
+
+## Table of Contents
+
+1. [Available Target Platforms](#available-target-platforms)
+   1. [Azure DevOps](#azure-devops)
+   1. [Slack](#slack)
+1. [Supported Notifications](#supported-notifications)
+   1. [Deployments](#deployments)
+      1. [SuccessfulDeployment](#successfuldeployment)
+   1. [Docker Images](#docker-images)
+      1. [FailedDockerImage](#faileddockerimage)
+      1. [NewDockerImage](#newdockerimage)
+   1. [Design Files](#design-files)
+      1. [NewDesignFile](#newdesignfile)
+   1. [NPM Packages](#npm-packages)
+      1. [NewNpmPackageVersion](#newnpmpackageversion)
+      1. [FailedNpmPackageVersion](#failednpmpackageversion)
 
 ## Available Target Platforms
 
@@ -75,7 +94,9 @@ Each notification is associated with a specific event. When posting notification
 
 ### Deployments
 
-New succesful deployment:
+#### `SuccessfulDeployment`
+
+This notification signals a sucessful deployment:
 
 ```json
 {
@@ -97,7 +118,9 @@ New succesful deployment:
 
 ### Docker Images
 
-Failure building / publishing a new _Docker_ image:
+#### `FailedDockerImage`
+
+A notification to be sent whenever a _Docker_ image failed to build or could not be published in a container registry:
 
 ```json
 {
@@ -112,7 +135,9 @@ Failure building / publishing a new _Docker_ image:
 }
 ```
 
-New _Docker_ image pushed to container registry:
+#### `NewDockerImage`
+
+This notification should be fired when a new _Docker_ image was pushed to a container registry:
 
 ```json
 {
@@ -132,7 +157,9 @@ New _Docker_ image pushed to container registry:
 
 ### Design Files
 
-New _Figma_ file version:
+#### `NewDesignFile`:
+
+An event to be dispatched when the Design team publishes a new version of a _Figma_ file.
 
 ```json
 {
@@ -160,7 +187,9 @@ New _Figma_ file version:
 
 ### NPM Packages
 
-New _NPM_ package version:
+#### `NewNpmPackageVersion`:
+
+Signals a new version of an _NPM_ package. It is assumed that the package was built and published in a package registry:
 
 ```json
 {
@@ -178,7 +207,9 @@ New _NPM_ package version:
 }
 ```
 
-Failed _NPM_ package version:
+#### `FailedNpmPackageVersion`
+
+Trigger this notification when an error occurred while building or publishing a new version of an _NPM_ package:
 
 ```json
 {
@@ -194,26 +225,4 @@ Failed _NPM_ package version:
     "registry": "<registry-url>"
   }
 }
-```
-
-## Publishing Changes
-
-This package should only be published using a _CI/CD_ pipeline. Check with the _DevOps_ team if you're experience any issues.
-
-If you still need to publish it manually, run the following 2 commands:
-
-Build the package to lib/ folder.
-
-```bash
-pnpm build
-```
-
-Publish the built `lib` folder to the package registry:
-
-```bash
-pnpm publish
-```
-
-```bash
-pnpm publish
 ```
