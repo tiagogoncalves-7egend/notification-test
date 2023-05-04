@@ -8,8 +8,8 @@ on:
         type: choice
         description: Container image to deploy
         options:
-        - server/runner
-        - server/api
+          - server/runner
+          - server/api
       VERSION:
         required: false
         type: string

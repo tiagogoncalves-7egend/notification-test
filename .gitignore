@@ -100,4 +100,4 @@ dist
 .DS_Store
 
 # Local github actions
-.local.secrets
+.local*
