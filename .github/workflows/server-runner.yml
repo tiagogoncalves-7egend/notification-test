@@ -26,10 +26,15 @@ jobs:
             echo "version=${GITHUB_SHA:0:7}" >> $GITHUB_OUTPUT
             echo ${GITHUB_SHA:0:7}
           elif [[ ${{ github.ref }} == refs/tags/* ]]; then
-            echo "version=${{ github.ref }}" >> "$GITHUB_OUTPUT"
+            echo "version=${{ github.ref }}" >> $GITHUB_OUTPUT
             echo ${{ github.ref }}
           fi
-          
+          echo "changelog=$(git log -1 --pretty=%B ${GITHUB_SHA})" >> $GITHUB_OUTPUT
+          echo $(git log -1 --pretty=%B ${GITHUB_SHA})
+          echo "actor_email=$(git log -n 1 --pretty=format:%ae)" >> $GITHUB_OUTPUT
+          echo $(git log -n 1 --pretty=format:%ae)
+          echo "repo_name=$(basename ${{ github.repository }})" >> $GITHUB_OUTPUT
+          echo $(basename ${{ github.repository }})
 
   build-image:
     uses: 7egend/workflows/.github/workflows/build-image.yml@main
@@ -57,6 +62,33 @@ jobs:
     needs: [prepare, build-image]
 
 
+  post-new-docker-image-notification:
+    uses: 7egend/workflows/.github/workflows/notification-hub-post-new-docker-image.yml@main
+    needs: [prepare, build-image, build-other-images]
+    secrets: inherit
+    with:
+      SLACK_CHANNEL: ${{ vars.slack_channel }}
+      AUTHOR_NAME: ${{ github.triggering_actor }}
+      PROJECT_NAME: ${{ github.repository }}
+      RELEASE_TAG: ${{ needs.prepare.outputs.version }}
+      RELEASE_CHANGELOG: ${{ github.event.head_commit.message }}
+      LINKS_SOURCE_CODE: "${{ github.server_url }}/${{ github.repository }}"
+      LINKS_IMAGE: "ghcr.io/${{ github.repository }}/server/runner:${{ needs.prepare.outputs.version }}"
+
+
+  post-failed-docker-image-notification:
+    uses: 7egend/workflows/.github/workflows/notification-hub-post-failed-docker-image.yml@main
+    needs: [prepare, build-image, build-other-images]
+    if: ${{ needs.build-image.result == 'failure' || needs.build-other-images.result == 'failure' }}
+    with:
+      SLACK_EMAIL: ${{ needs.prepare.outputs.actor_email }}
+      PROJECT_NAME: ${{ github.repository }}
+      LINKS_SOURCE_CODE: "${{ github.server_url }}/${{ github.repository }}"
+      LINKS_IMAGE: "ghcr.io/${{ github.repository }}/server/runner:${{ needs.prepare.outputs.version }}"
+      LINKS_PIPELINE: "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+      LINKS_REGISTRY: https://github.com/orgs/7egend/packages?repo_name=${{ needs.prepare.outputs.repo_name }}
+
+
   deploy-production-notification-hub-runner:
     uses: 7egend/workflows/.github/workflows/deploy.yml@main
     with:
@@ -69,3 +101,18 @@ jobs:
       CI_BOT_SSH_PRIVATE_KEY: ${{ secrets.CI_BOT_SSH_PRIVATE_KEY }}
       ANSIBLE_VAULT_PASSWORD: ${{ secrets.VAULT_PASSWORD }}
     needs: [prepare, build-other-images]
+
+
+  post-successful-deployment:
+    uses: 7egend/workflows/.github/workflows/notification-hub-post-successful-deployment.yml@main
+    needs: deploy-production-notification-hub-runner
+    with:
+      SLACK_CHANNEL: ${{ vars.slack-channel }}
+      AUTHOR_NAME: ${{ github.triggering_actor }}
+      CREATED_AT: ${{ github.event.head_commit.timestamp }}
+      ENVIRONMENT: production
+      PROJECT_NAME: ${{ github.repository }}
+      WORKGROUP: ${{ needs.prepare.outputs.repo_name }}
+      RELEASE_TAG: ${{ needs.prepare.outputs.version }}
+      RELEASE_CHANGELOG: ${{ github.event.head_commit.message }}
+      LINKS_SOURCE_CODE: "${{ github.server_url }}/${{ github.repository }}"
