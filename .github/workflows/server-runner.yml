@@ -40,7 +40,7 @@ jobs:
           echo "repo_name=$(basename ${{ github.repository }})" >> $GITHUB_OUTPUT
           echo $(basename ${{ github.repository }})
           echo "timestamp=$(date -u +"%Y-%m-%dT%H:%M:%S.%3NZ")" >> $GITHUB_OUTPUT
-          echo $(date -u +"%Y-%m-%dT%H:%M:%S.%3NZ")"
+          echo $(date -u +"%Y-%m-%dT%H:%M:%S.%3NZ")
 
 
   build-image:
