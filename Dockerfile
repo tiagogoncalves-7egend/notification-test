@@ -1,10 +1,21 @@
-ARG NODEJS_VERSION=18.16.0
+ARG NODEJS_VERSION=20.0.0
 ARG ALPINE_VERSION=3.17
 
 # -------------------------------------------
 # Install pnpm and other dependencies
 # -------------------------------------------
-FROM node:${NODEJS_VERSION}-alpine${ALPINE_VERSION} AS pnpm
+FROM node:${NODEJS_VERSION}-alpine${ALPINE_VERSION} AS secured
+
+# Fixes medium vulnerability (CVE-2023-1255):
+# https://avd.aquasec.com/nvd/cve-2023-1255
+RUN apk add \
+    libcrypto3==3.0.8-r4 \
+    libssl3==3.0.8-r4
+
+# -------------------------------------------
+# Install pnpm and other dependencies
+# -------------------------------------------
+FROM secured AS pnpm
 RUN npm i -g pnpm
 
 # -------------------------------------------
@@ -23,7 +34,7 @@ RUN pnpm --filter=${PROJECT} --prod deploy build
 # -------------------------------------------
 # Run the application
 # -------------------------------------------
-FROM node:${NODEJS_VERSION}-alpine${ALPINE_VERSION} as application
+FROM secured as application
 ARG WORKDIR=/home/node/app
 WORKDIR ${WORKDIR}
 COPY --from=builder /root/build/dist dist
