@@ -1,4 +1,18 @@
 # -------------------------------------
+# Set global tag.
+# -------------------------------------
+- name: Get git version or commit hash
+  shell: "git describe --tags || git rev-parse --short HEAD"
+  register: git_tag
+
+- name: Set current build version
+  set_fact:
+    global_tag: "{{ git_tag.stdout }}"
+
+- name: Cat global_tag
+  debug: var=global_tag
+
+# -------------------------------------
 # Copy application files to target.
 # -------------------------------------
 - name: Ensure destination directory exists
@@ -27,22 +41,6 @@
     registry_url: "{{ gitlab_registry_url }}"
     username: "{{ gitlab_username }}"
     password: "{{ gitlab_password }}"
-
-# -------------------------------------
-# Set global docker tag.
-# -------------------------------------
-# - name: Get git version or commit hash
-#   shell: "git describe --tags || git rev-parse --short HEAD"
-#   register: git_tag
-#   when: general_tag.stdout is not defined or general_tag.stdout == ""
-
-# - name: Set current build version
-#   set_fact:
-#     general_tag: "{{ git_tag.stdout }}"
-#   when: general_tag.stdout is not defined or general_tag.stdout == ""
-
-- name: Cat general_tag
-  debug: var=general_tag
 
 # -------------------------------------
 # Restart services and check if they

@@ -4,5 +4,3 @@
 ansible_python_interpreter: /usr/bin/python3
 ansible_port: 22
 ansible_user: deployer
-
-general_tag: latest

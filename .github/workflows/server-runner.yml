@@ -101,7 +101,7 @@ jobs:
     uses: 7egend/workflows/.github/workflows/deploy.yml@main
     needs: [prepare, build-other-images]
     with:
-      DEPLOYER_IMAGE: ghcr.io/${{ github.repository }}/devops/ansible:latest
+      ROOT_PATH: devops/ansible
       PLAYBOOK: playbooks/production/notification-hub/deploy.yaml
       KNOWN_HOSTS_FILE: ${{ vars.KNOWN_HOSTS_FILE }}
       ENVIRONMENT: production

@@ -10,9 +10,9 @@ gateway_traefik_https_port: 443
 # Notification Hub
 # -------------------------------------
 notification_hub_runner_docker_image: ghcr.io/7egend/notification-hub/server/runner
-notification_hub_runner_docker_image_tag: "{{ general_tag }}"
+notification_hub_runner_docker_image_tag: "{{ global_tag }}"
 notification_hub_api_docker_image: ghcr.io/7egend/notification-hub/server/api
-notification_hub_api_docker_image_tag: "{{ general_tag }}"
+notification_hub_api_docker_image_tag: "{{ global_tag }}"
 
 # -------------------------------------
 # AMQP
