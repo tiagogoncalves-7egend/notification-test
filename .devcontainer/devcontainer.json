@@ -15,7 +15,8 @@
 				"GitHub.copilot-labs",
 				"ms-azuretools.vscode-docker",
 				"esbenp.prettier-vscode",
-				"ms-vscode.makefile-tools"
+				"ms-vscode.makefile-tools",
+				"WallabyJs.quokka-vscode@1.0.515"
 			]
 		}
 	}
