@@ -90,7 +90,7 @@ Send the notification as a _Direct Message_ (_DM_) to a list of _Slack_ members:
 
 ## Supported Notifications
 
-Each notification is associated with a specific event. When posting notifications, each of those notifications will be renderered differently and based on the context of the target platform. Check the [runner](https://gitlab.com/7egend/projects/home/microservices/notification-hub/server/runner) repository for more info.
+Each notification is associated with a specific event. When posting notifications, each of those notifications will be renderered differently and based on the context of the target platform. Check the [runner](server/runner) repository for more info.
 
 ### Deployments
 
