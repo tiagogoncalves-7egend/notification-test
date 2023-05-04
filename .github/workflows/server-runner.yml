@@ -79,6 +79,7 @@ jobs:
   post-failed-docker-image-notification:
     uses: 7egend/workflows/.github/workflows/notification-hub-post-failed-docker-image.yml@main
     needs: [prepare, build-image, build-other-images]
+    secrets: inherit
     if: ${{ needs.build-image.result == 'failure' || needs.build-other-images.result == 'failure' }}
     with:
       SLACK_EMAIL: ${{ needs.prepare.outputs.actor_email }}
@@ -106,6 +107,7 @@ jobs:
   post-successful-deployment:
     uses: 7egend/workflows/.github/workflows/notification-hub-post-successful-deployment.yml@main
     needs: deploy-production-notification-hub-runner
+    secrets: inherit
     with:
       SLACK_CHANNEL: ${{ vars.slack-channel }}
       AUTHOR_NAME: ${{ github.triggering_actor }}
