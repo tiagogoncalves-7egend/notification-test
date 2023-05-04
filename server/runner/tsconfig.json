@@ -11,6 +11,7 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "moduleResolution": "node",
-    "allowSyntheticDefaultImports": true
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true
   },
 }
