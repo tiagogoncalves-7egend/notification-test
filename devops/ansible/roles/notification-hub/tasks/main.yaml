@@ -4,7 +4,8 @@
 - name: Get git version or commit hash
   shell: "git describe --tags || git rev-parse --short HEAD"
   register: git_tag
-
+  delegate_to: localhost
+  
 - name: Set current build version
   set_fact:
     global_tag: "{{ git_tag.stdout }}"
