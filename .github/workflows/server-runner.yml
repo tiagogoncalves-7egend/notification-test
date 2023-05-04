@@ -15,6 +15,9 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       version: ${{ steps.set_version.outputs.version }}
+      changelog: ${{ steps.set_version.outputs.changelog }}
+      actor_email: ${{ steps.set_version.outputs.actor_email }}
+      repo_name: ${{ steps.set_version.outputs.repo_name }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
