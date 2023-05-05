@@ -31,9 +31,6 @@ jobs:
         with:
           node-version: '19'
           cache: 'pnpm'
-        
-      - name: Install dependencies
-        run: pnpm i
 
       - name: Cache pnpm packages
         uses: actions/cache@v3
