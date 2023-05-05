@@ -16,7 +16,8 @@
 				"ms-azuretools.vscode-docker",
 				"esbenp.prettier-vscode",
 				"ms-vscode.makefile-tools",
-				"WallabyJs.quokka-vscode@1.0.515"
+				"WallabyJs.quokka-vscode@1.0.515",
+				"GitHub.vscode-github-actions"
 			]
 		}
 	}
