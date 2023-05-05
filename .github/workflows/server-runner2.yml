@@ -40,4 +40,7 @@ jobs:
             build
       
       - name: pnpm deploy build
-        run: pnpm --filter=@7egend/notification-hub-runner --prod deploy build
+        run: |
+          pwd
+          ls -la
+          pnpm --filter=@7egend/notification-hub-runner --prod deploy build || exit 1
