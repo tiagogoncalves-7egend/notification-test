@@ -1,4 +1,0 @@
-- name: Deploy AMQP to production
-  hosts: production_notification_hub
-  roles:
-    - roles/amqp

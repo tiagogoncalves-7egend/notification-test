@@ -1,5 +1,0 @@
-# -------------------------------------
-# Traefik
-# -------------------------------------
-gateway_traefik_acme_email: ci_bot+notification-hub@7egend.cr
-gateway_notification_hub_service_url: http://api:3000

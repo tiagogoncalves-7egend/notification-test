@@ -1,4 +1,0 @@
-- name: Notification Hub gateway deploy
-  hosts: production_notification_hub
-  roles:
-    - role: roles/gateway
