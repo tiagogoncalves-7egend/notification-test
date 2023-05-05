@@ -50,7 +50,6 @@ jobs:
       - name: Install dependencies
         run: |
           pnpm install
-          cat pnpm-lock.yaml
         
       # - name: Cache pnpm packages
       #   uses: actions/cache@v3
