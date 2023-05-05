@@ -1,0 +1,31 @@
+name: --Build and deploy server/runner docker image
+
+on:
+  workflow_dispatch:
+  push:
+    branches:    
+      - main
+    tags:
+      - '*.*.*'
+    paths:
+      - 'server/runner/**'
+
+jobs:
+  build-test-push:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: '19'
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm i
