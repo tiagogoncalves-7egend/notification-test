@@ -48,7 +48,7 @@ jobs:
             ${{ runner.os }}-pnpm-store-
   
       - name: Install dependencies
-        run: pnpm --filter=@7egend/notification-hub-runner --prod deploy build
+        run: pnpm install --frozen-lockfile
         
       # - name: Cache pnpm packages
       #   uses: actions/cache@v3
