@@ -21,11 +21,6 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Setup node
-        uses: actions/setup-node@v3
-        with:
-          node-version: '19'
-
       - name: Install pnpm
         id: pnpm-install
         uses: pnpm/action-setup@v2
@@ -33,6 +28,11 @@ jobs:
           version: 6.32.9
           run_install: false
 
+      - name: Setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: '19'
+            
       - name: Get pnpm store directory
         id: pnpm-cache
         shell: bash
@@ -48,7 +48,7 @@ jobs:
             ${{ runner.os }}-pnpm-store-
   
       - name: Install dependencies
-        run: pnpm install
+        run: pnpm --filter=@7egend/notification-hub-runner --prod deploy build
         
       # - name: Cache pnpm packages
       #   uses: actions/cache@v3
