@@ -1,4 +1,4 @@
-FROM node:20.0.0-alpine3.17
+FROM node:19.6-alpine3.17
 
 # Fixes medium vulnerability (CVE-2023-1255):
 # https://avd.aquasec.com/nvd/cve-2023-1255

@@ -34,3 +34,13 @@ jobs:
         
       - name: Install dependencies
         run: pnpm i
+
+      - name: Cache pnpm packages
+        uses: actions/cache@v3
+        with:
+          key: ${{ runner.os }}-pnpm-server-runner
+          path: |
+            build
+      
+      - name: pnpm deploy build
+        run: pnpm --filter=@7egend/notification-hub-runner --prod deploy build
