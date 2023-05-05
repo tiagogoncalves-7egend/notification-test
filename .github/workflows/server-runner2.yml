@@ -21,17 +21,35 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v2
-        with:
-          version: 6.32.9
-
       - name: Setup node
         uses: actions/setup-node@v3
         with:
           node-version: '19'
-          cache: 'pnpm'
 
+      - name: Install pnpm
+        id: pnpm-install
+        uses: pnpm/action-setup@v2
+        with:
+          version: 6.32.9
+          run_install: false
+
+      - name: Get pnpm store directory
+        id: pnpm-cache
+        shell: bash
+        run: |
+          echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
+
+      - uses: actions/cache@v3
+        name: Setup pnpm cache
+        with:
+          path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+  
+      - name: Install dependencies
+        run: pnpm install
+        
       # - name: Cache pnpm packages
       #   uses: actions/cache@v3
       #   with:
@@ -39,8 +57,8 @@ jobs:
       #     path: |
       #       build
       
-      - name: pnpm deploy build
-        run: |
-          pwd
-          ls -la
-          pnpm --filter=@7egend/notification-hub-runner --prod deploy build || exit 1
+      # - name: pnpm deploy build
+      #   run: |
+      #     pwd
+      #     ls -la
+      #     pnpm --filter=@7egend/notification-hub-runner --prod deploy build || exit 1
