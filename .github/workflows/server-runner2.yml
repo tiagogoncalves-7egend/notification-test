@@ -38,19 +38,19 @@ jobs:
         run: |
           echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
 
-      - uses: actions/cache@v3
-        name: Setup pnpm cache
-        with:
-          path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
-          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-pnpm-store-
+      # - uses: actions/cache@v3
+      #   name: Setup pnpm cache
+      #   with:
+      #     path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
+      #     key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+      #     restore-keys: |
+      #       ${{ runner.os }}-pnpm-store-
   
-      - name: Install dependencies
-        run: |
-          pnpm install
-          pnpm -v
-          cat pnpm-lock.yaml
+      # - name: Install dependencies
+      #   run: |
+      #     pnpm install
+      #     pnpm -v
+      #     cat pnpm-lock.yaml
         
       # - name: Cache pnpm packages
       #   uses: actions/cache@v3
@@ -59,8 +59,8 @@ jobs:
       #     path: |
       #       build
       
-      # - name: pnpm deploy build
-      #   run: |
-      #     pwd
-      #     ls -la
-      #     pnpm --filter=@7egend/notification-hub-runner --prod deploy build || exit 1
+      - name: pnpm deploy build
+        run: |
+          pwd
+          ls -la
+          pnpm --filter=@7egend/notification-hub-runner --prod deploy build
