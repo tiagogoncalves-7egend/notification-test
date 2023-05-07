@@ -63,7 +63,7 @@ jobs:
         run: |
           pwd
           ls -la
-          pnpm --filter=@7egend/notification-hub-runner --prod deploy build
+          pnpm --filter=@7egend/notification-hub-api --prod deploy build
 
       - name: ls build
         run: |
